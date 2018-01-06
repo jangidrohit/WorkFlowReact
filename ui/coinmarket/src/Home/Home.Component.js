@@ -6,16 +6,11 @@ import * as appConfig from './../Config/Config';
 class Home extends React.Component {
 
 	 constructor() {
-      super();
-      this.state = {
-         data: []
-      }
-   }
-
-
- onRowClick(){
-
- }
+		super();
+		this.state = {
+			data: []
+		}
+	}
 
  componentDidMount() {
     return fetch(`${appConfig.default.coinMarketRout}`, {
@@ -36,7 +31,7 @@ class Home extends React.Component {
 		const {history}=this.props
 		var options = {
 			onRowClick: function(row){
-				history.push('/chat/'+ row.name);
+				history.push('/chart/'+ row.name);
 			}
 		}
 		return (

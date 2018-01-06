@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Header/Header.Component'
 import Home from './Home/Home.Component'
 import Report from './Report/Report.Component'
+import Chart from './Chart/Chart.Component'
 import {
   BrowserRouter as Router,
   Route,
@@ -21,7 +22,7 @@ class App extends Component {
           <Switch>
             <Route exact  path="/" component={Home}/>
             <Route exact path="/report" component={Report}/>
-            <Route exact path="/chat/:name" component={Report}/>
+            <Route exact path="/chart/:name" component={Chart}/>
           </Switch>
          </div>
         </Router>
