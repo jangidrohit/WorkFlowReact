@@ -45,13 +45,12 @@ class Report extends React.Component {
 	  }
 
 	render(){
-		const { match} = this.props
-    	var name = match.params.name
+		
 		
 		return (
 			<div>
 			<h4>Report</h4>
-			<div class="report-container">
+			<div className="report-container">
 
 			 <BootstrapTable data={this.state.data} striped={true} hover={true}>
 			      <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>#</TableHeaderColumn>

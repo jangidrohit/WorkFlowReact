@@ -1,6 +1,14 @@
+var mongoose = require('mongoose');
+var coinDetails = require('../../cronjob/cronjob-schema');
+
 function getCoinsDetails(request, response){
-	
-	  return response.send({result : 'from coins'});
+    coinDetails.find({}, function(error, coinDetails){
+        if(error){
+            return response.send({error : error});
+        }else{
+            return response.send({result : coinDetails});
+        }
+    });
 }
 
 

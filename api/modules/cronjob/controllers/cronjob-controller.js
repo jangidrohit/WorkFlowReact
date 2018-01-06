@@ -4,7 +4,7 @@ var axios = require('axios');
 var coinSchema = require('../cronjob-schema');
 
 module.exports.cronJobStart = function (){
-	cron.schedule('5 * * * * *', function () {
+	cron.schedule('25 * * * * *', function () {
 		console.log("started");
 		getCoinDetails();
 	});
