@@ -4,7 +4,6 @@ var _ = require('lodash');
 
 function buySellCoins(req, res){
 	console.log("**************************")
-	return new Promise(function(resolve, reject) {
 	   var body = _.get(req, 'body')   
 
 	   var reportObj = new reportSchema(body);
@@ -19,7 +18,7 @@ function buySellCoins(req, res){
 		  	//reject(error)
 		  	//return res.send({error : error});
 		});
-	})
+	
 }
 
 function getReportCoins(req, res){
