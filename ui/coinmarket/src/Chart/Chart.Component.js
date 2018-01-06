@@ -45,10 +45,11 @@ class Chart extends React.Component {
           });
 	}
 	render(){
-		console.log(this);
+        console.log(this);
+        const {match}=this.props
 		return (
 			<div>
-			    <h4>Chart</h4>
+			    <h4>{match.params.name}</h4>
                 <LineChart
                     axes
                     margin={{top: 10, right: 30, bottom: 100, left: 100}}
@@ -65,6 +66,14 @@ class Chart extends React.Component {
                         this.state.volume_usd
                     ]}
                 />
+                <div>
+                    <ul className="chart-legend">
+                    <li className="c-green"><span><div></div></span><span>Market Cap</span></li>
+                    <li className="c-red"><span><div></div></span><span>Price (USD)</span></li>
+                    <li className="c-blue"><span><div></div></span><span>Price (BTC)</span></li>
+                    <li className="c-gray"><span><div></div></span><span>Volume</span></li>
+                    </ul>
+                </div>
 			</div>
         )
 	}

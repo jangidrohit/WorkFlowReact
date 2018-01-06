@@ -2,6 +2,8 @@ var cron = require('node-cron');
 var mongoose = require('mongoose');
 var axios = require('axios');
 var coinSchema = require('../cronjob-schema');
+var reportController = require('../../report/controllers/report-controller');
+var _ = require('lodash');
 
 module.exports.cronJobStart = function (){
 	cron.schedule('25 * * * * *', function () {
@@ -24,6 +26,19 @@ function getCoinDetails(){
 			else{
 				console.log("new data saving");
 				coinSchema.collection.insert(response.data);
+				_.forEach(response.data, function(data){
+					if(data.percent_change_24h < 5 || data.percent_change_24h > 15){
+						var body = {
+							name: response.data.name,
+						    date: new Date(),
+						    price: response.data.price_usd,
+						    change_rate: response.data.percent_change_24h,
+						    market_cap: response.data.market_cap_usd,
+						    action: data.percent_change_24h < 5 ? 'Buy' : 'Sell'
+						}
+						reportController.buySellCoins({req: body}, {});
+					}
+				})
 				console.log("new data saved");
 			}
 		})

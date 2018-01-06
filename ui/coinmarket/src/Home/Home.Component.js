@@ -12,7 +12,7 @@ class Home extends React.Component {
          minRange : 5,
          maxRange : 15
       }
-      this.ActionOption = this.ActionOption.bind(this)
+    //  this.ActionOption = this.ActionOption.bind(this)
    }
 
 
@@ -31,20 +31,37 @@ class Home extends React.Component {
 
   }
 
-  	onChabgeHandler(e){
+  	onChangeHandler(e){
   		this.setState({[e.target.name]: e.target.value})
   	}
 
-	ActionOption(cell, row){
-			
-			if (row.percent_change_24h <= this.state.minRange) {
-				 return '<button type="button" class="btn btn-success">Buy</button> ';
-			}
-			if (row.percent_change_24h >= this.state.maxRange) {
-				 return '<button type="button" class="btn btn-primary">Sell</button> ';
-			}
+  	onSaveRange (){
+  		debugger;
+  		var data = {
+  			min : this.state.minRange,
+  			max : this.state.maxRange,
+  			id : 121
+  		}
+  		return fetch(`${appConfig.default.apiRoute}/range`, {
+		method: 'POST',
+		body: data
+		})
+		.then((res)=> {
+			return res.json();
+		})
+		.then(function(res){
+			console.log('Range saved');
+		}.bind(this))
+  	}
+	// ActionOption(cell, row){
+	// 		if (row.percent_change_24h <= this.state.minRange) {
+	// 			 return '<button type="button" class="btn btn-success">Buy</button> ';
+	// 		}
+	// 		if (row.percent_change_24h >= this.state.maxRange) {
+	// 			 return '<button type="button" class="btn btn-primary">Sell</button> ';
+	// 		}
 		 
-		}
+	// 	}
 
 	DetailsOption(cell, row){
 	  return '<div class="chat-option"><i class="glyphicon glyphicon-list-alt"></i></div>';
@@ -53,7 +70,7 @@ class Home extends React.Component {
 	render(){
 		const {history}=this.props
 		var options = {
-			onRowClick: function(row){
+			onRowClick: function(row, target){
 				history.push('/chart/'+ row.name);
 			}
 		}
@@ -63,8 +80,10 @@ class Home extends React.Component {
 				<div className="coins-details-header">
 					<div className="coin-title"><h3>Cryptocurrency Market Capitalizations</h3></div>
 					<div className="coin-range">
-						<div className="min-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChabgeHandler(e)}} value={this.state.minRange} placeholder="Min range" name="minRange"/></div>
-						<div className="max-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChabgeHandler(e)}} value={this.state.maxRange} placeholder="Max range" name="maxRange"/></div>
+						<div className="min-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChangeHandler(e)}} value={this.state.minRange} placeholder="Min range" name="minRange"/></div>
+						<div className="max-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChangeHandler(e)}} value={this.state.maxRange} placeholder="Max range" name="maxRange"/></div>
+
+						<div className="max-range"><button type="button" class="btn btn-primary" onClick={(e)=>{this.onSaveRange(e)}}>Save Range</button></div>
 					</div>
 				</div>
 
@@ -78,7 +97,6 @@ class Home extends React.Component {
 				      <TableHeaderColumn dataField="total_supply"  filter={ { type: 'RegexFilter', placeholder: 'Supply' } } dataSort={true}>Supply</TableHeaderColumn>
 				      <TableHeaderColumn dataField="percent_change_24h" filter={ { type: 'RegexFilter', placeholder: 'Change' } } dataSort={true}>Change</TableHeaderColumn>
 				      <TableHeaderColumn dataFormat={this.DetailsOption} width="80" >Graph</TableHeaderColumn>
-				      <TableHeaderColumn dataFormat={this.ActionOption} width="100">Action</TableHeaderColumn>
 				  </BootstrapTable>
 
 				</div>
