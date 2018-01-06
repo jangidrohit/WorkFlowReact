@@ -26,20 +26,26 @@ function getCoinDetails(){
 			else{
 				console.log("new data saving");
 				coinSchema.collection.insert(response.data);
-				_.forEach(response.data, function(data){
-					if(data.percent_change_24h < 5 || data.percent_change_24h > 15){
-						var body = {
-							name: response.data.name,
-						    date: new Date(),
-						    price: response.data.price_usd,
-						    change_rate: response.data.percent_change_24h,
-						    market_cap: response.data.market_cap_usd,
-						    action: data.percent_change_24h < 5 ? 'Buy' : 'Sell'
+				axios.get('https://localhost:3001/api/range')
+				.then(response => {
+					_.forEach(response.data, function(data){
+						if(data.percent_change_24h < 5 || data.percent_change_24h > 15){
+							var body = {
+								name: response.data.name,
+							    date: new Date(),
+							    price: response.data.price_usd,
+							    change_rate: response.data.percent_change_24h,
+							    market_cap: response.data.market_cap_usd,
+							    action: data.percent_change_24h < 5 ? 'Buy' : 'Sell'
+							}
+							reportController.buySellCoins({req: body}, {});
 						}
-						reportController.buySellCoins({req: body}, {});
-					}
+					})
+					console.log("new data saved");
 				})
-				console.log("new data saved");
+				.catch(error => {
+				  	console.log(error);
+				});
 			}
 		})
 	})
