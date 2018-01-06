@@ -29,7 +29,6 @@ class Home extends React.Component {
 
 
 	ActionOption(cell, row){
-			debugger;
 		  return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 		}
 
