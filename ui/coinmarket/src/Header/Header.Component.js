@@ -8,7 +8,7 @@ class Header extends React.Component {
 	render(){
 		return (
 			<header className="App-header">
-	        <h1 className="App-title">Welcome to Xcdify coin market</h1>
+	        <h1 className="App-title">Welcome to Xcdify Coin market</h1>
 			<ul className="nev-link">
 				<li><Link to={"/"}>Home</Link></li>
 				<li>|</li>
