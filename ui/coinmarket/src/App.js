@@ -7,7 +7,6 @@ import Chart from './Chart/Chart.Component'
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch
 } from 'react-router-dom'
 
