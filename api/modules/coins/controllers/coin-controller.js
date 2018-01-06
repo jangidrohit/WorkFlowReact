@@ -11,7 +11,17 @@ function getCoinsDetails(request, response){
     });
 }
 
+// getCoin Details By Dates between
+function getCoinDetailsByDates(pid){
+
+	coinSchema.findOne({id: pid}, function(err, res) {
+		console.log(res);
+		//logger.info("res2", res);
+      });
+}
+
 
 module.exports = {
-	getCoinsDetails : getCoinsDetails
+	getCoinsDetails : getCoinsDetails,
+	getCoinDetailsByDates : getCoinDetailsByDates
 };
