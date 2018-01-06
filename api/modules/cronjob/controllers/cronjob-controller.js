@@ -6,7 +6,7 @@ var reportController = require('../../report/controllers/report-controller');
 var _ = require('lodash');
 
 module.exports.cronJobStart = function (){
-	cron.schedule('1 * * * * *', function () {
+	cron.schedule('25 * * * * *', function () {
 		console.log("started");
 		getCoinDetails();
 	});
@@ -33,12 +33,12 @@ function getCoinDetails(){
 					_.forEach(response.data, function(data){
 						if(data.percent_change_24h < result.data.result[0].min || data.percent_change_24h > result.data.result[0].max){
 							var body = {
-								name: response.data.name,
+								name: data.name,
 							    date: new Date(),
-							    price: response.data.price_usd,
-							    change_rate: response.data.percent_change_24h,
-							    market_cap: response.data.market_cap_usd,
-							    action: data.percent_change_24h < 5 ? 'Buy' : 'Sell'
+							    price: data.price_usd,
+							    change_rate: data.percent_change_24h,
+							    market_cap: data.market_cap_usd,
+							    action: +data.percent_change_24h < 5 ? 'Buy' : 'Sell'
 							}
 							reportController.buySellCoins({req: body}, {});
 						}
