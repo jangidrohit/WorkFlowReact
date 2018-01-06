@@ -9,17 +9,33 @@ function buySellCoins(req, res){
 
 	   var reportObj = new reportSchema(body);
 	   reportObj.save()
-	   	.then(function(res) {
-	   		console.log(res);
-	   		resolve(res)   		
+	   	.then(function(data) {
+	   		console.log(data);
+	   		resolve(data)
+	   		return res.send({result : data})   		
 	   	})
 		.catch((error) => {
 		  	console.log(error);
 		  	reject(error)
+		  	return res.send({error : error});
 		});
 	})
 }
 
+function getReportCoins(req, res){
+	return new Promise(function(resolve, reject) {
+	   var body = _.get(req, 'body')   
+	    reportSchema.find({}, function(error, reports){
+	        if(error){
+	            return res.send({error : error});
+	        }else{
+	            return res.send({result : reports});
+	        }
+	    });
+	})
+}
+
 module.exports = {
-	buySellCoins : buySellCoins
+	buySellCoins : buySellCoins,
+	getReportCoins: getReportCoins
 };
