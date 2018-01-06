@@ -10,10 +10,11 @@ class Header extends React.Component {
 		return (
 			<header className="App-header">
 	        <h1 className="App-title">Welcome to Xcdify coin market</h1>
-		          <ul>
-			        <li><Link to={"/"}>Home</Link></li>
-			        <li><Link to={"/report"}>Report</Link></li>
-			      </ul>
+			<ul className="nev-link">
+				<li><Link to={"/"}>Home</Link></li>
+				<li>|</li>
+				<li><Link to={"/report"}>Report</Link></li>
+			</ul>
 	        </header>
         )
 	}

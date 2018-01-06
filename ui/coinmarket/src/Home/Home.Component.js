@@ -13,6 +13,10 @@ class Home extends React.Component {
    }
 
 
+ onRowClick(){
+
+ }
+
  componentDidMount() {
 
     return fetch(`https://api.coinmarketcap.com/v1/ticker/`, {
@@ -30,11 +34,18 @@ class Home extends React.Component {
   }
 
 	render(){
+		const {history}=this.props
+		var options = {
+			onRowClick: function(row){
+				debugger
+				history.push('/chat/'+ row.name);
+			}
+		}
 		return (
 			<div>
 			<h3>Cryptocurrency Market Capitalizations</h3>
-			<div class="coins-details-container">
-			 <BootstrapTable data={this.state.data} striped={true} hover={true}>
+			<div className="coins-details-container">
+			 <BootstrapTable data={this.state.data} options={options}  striped={true} hover={true}>
 			      <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true}>Name</TableHeaderColumn>
 			      <TableHeaderColumn dataField="symbol" dataSort={true}>Symbol</TableHeaderColumn>
 			      <TableHeaderColumn dataField="market_cap_usd" dataSort={true}>Market Cap</TableHeaderColumn>
@@ -43,7 +54,6 @@ class Home extends React.Component {
 			      <TableHeaderColumn dataField="total_supply" dataSort={true}>Supply</TableHeaderColumn>
 			      <TableHeaderColumn dataField="percent_change_24h" dataSort={true}>Change</TableHeaderColumn>
 			      <TableHeaderColumn dataField="name" dataSort={true}>Action</TableHeaderColumn>
-			     
 			  </BootstrapTable>
 
 			</div>
