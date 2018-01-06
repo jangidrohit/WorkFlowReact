@@ -6,7 +6,7 @@ var reportController = require('../../report/controllers/report-controller');
 var _ = require('lodash');
 
 module.exports.cronJobStart = function (){
-	cron.schedule('25 * * * * *', function () {
+	cron.schedule('1 * * * * *', function () {
 		console.log("started");
 		getCoinDetails();
 	});
@@ -26,10 +26,12 @@ function getCoinDetails(){
 			else{
 				console.log("new data saving");
 				coinSchema.collection.insert(response.data);
-				axios.get('https://localhost:3001/api/range')
-				.then(response => {
+				axios.get('http://localhost:3001/api/range')
+				.then(result => {
+					console.log("mininin");
+					//console.log(result.data.result[0].min);
 					_.forEach(response.data, function(data){
-						if(data.percent_change_24h < 5 || data.percent_change_24h > 15){
+						if(data.percent_change_24h < result.data.result[0].min || data.percent_change_24h > result.data.result[0].max){
 							var body = {
 								name: response.data.name,
 							    date: new Date(),
