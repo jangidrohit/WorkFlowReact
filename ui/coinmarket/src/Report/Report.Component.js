@@ -1,47 +1,44 @@
-import React from 'react'
+import React from 'react';
 import './Report.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import Search from '../Search/Search.Component'
+import Search from '../Search/Search.Component';
+import * as appConfig from './../Config/Config';
 class Report extends React.Component {
 
 	constructor() {
 		super();
 		this.state = {
-		   data: 
-		   [
-			  {
-				 "id":1,
-				 "name":"Bitcoin",
-				 "date":"Jan 06 2018",
-				 "price":"200",
-				 "changeRate":"100",
-				 "marketCap":"20",
-				 "action":"Y"
-			  },
-			  {
-				"id":2,
-				"name":"Bitcoin",
-				"date":"Jan 06 2018",
-				"price":"200",
-				"changeRate":"230",
-				"marketCap":"20",
-				"action":"N"
-			 },
-			 {
-				"id":3,
-				"name":"Bitcoin",
-				"date":"Jan 06 2018",
-				"price":"250",
-				"changeRate":"50",
-				"marketCap":"0",
-				"action":"Y"
-			 }
-		   ]
+
 		}
 	 }
-	 onFilter(data){
-		console.log(data)
-	 }
+	//  onFilter(data){
+	// 	console.log(data);
+	//  }
+
+	componentDidMount() {
+		return fetch(`${appConfig.default.apiReport}`, {
+			method: 'GET',
+		})
+		.then((res)=> {
+			console.log('adsadadadsasd');
+			return res.json();
+		})
+		.then(function(res){
+			this.setState({
+				data : res.result
+			})
+		}.bind(this))
+	
+	  }
+
+	//  reportList() {
+	// 	$.getJSON('https://localhost/api/report')
+	// 	  .then((results)  =>{
+	// 		console.log('afsafafdsasd');			
+	// 	  }) 
+	//   }
+	
+
 	 priceFormatter(cell, row){
 		return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 	  }

@@ -21,7 +21,6 @@ class Home extends React.Component {
 		method: 'GET',
 	})
 	.then((res)=> {
-		debugger;
 		return res.json();
 	})
 	.then(function(res){
