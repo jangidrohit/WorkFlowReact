@@ -1,0 +1,24 @@
+.chart-legend > li {
+    display: inline-block;
+    padding: 0 20px;
+}
+.chart-legend > li > span:first-child {
+    width: 15px;
+    display: inline-block;
+}
+.chart-legend > li > span:first-child > div{
+    width: 10px;
+    height: 10px;
+}
+.c-green > span:first-child > div {
+    background-color: green;
+}
+.c-red > span:first-child > div {
+    background-color: red;
+}
+.c-blue > span:first-child > div {
+    background-color: blue;
+}
+.c-gray > span:first-child > div {
+    background-color: gray;
+}
