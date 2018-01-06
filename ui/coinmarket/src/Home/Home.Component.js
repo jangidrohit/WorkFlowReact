@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-// import * as config from './../Config/Config';
+import * as appConfig from './../Config/Config';
 
 class Home extends React.Component {
 
@@ -18,8 +18,7 @@ class Home extends React.Component {
  }
 
  componentDidMount() {
-
-    return fetch(`https://api.coinmarketcap.com/v1/ticker/`, {
+    return fetch(`${appConfig.default.coinMarketRout}`, {
 		method: 'GET',
 	})
 	.then((res)=> {
@@ -37,7 +36,6 @@ class Home extends React.Component {
 		const {history}=this.props
 		var options = {
 			onRowClick: function(row){
-				debugger
 				history.push('/chat/'+ row.name);
 			}
 		}
