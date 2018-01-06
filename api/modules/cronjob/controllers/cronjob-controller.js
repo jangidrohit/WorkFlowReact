@@ -32,3 +32,4 @@ function getCoinDetails(){
 	  	console.log(error);
 	});
 }
+
