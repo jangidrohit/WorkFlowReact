@@ -10,14 +10,14 @@ function buySellCoins(req, res){
 	   var reportObj = new reportSchema(body);
 	   reportObj.save()
 	   	.then(function(data) {
-	   		console.log(data);
-	   		resolve(data)
-	   		return res.send({result : data})   		
+	   		//console.log(data);
+	   		//resolve(data)
+	   		//return res.send({result : data})   		
 	   	})
 		.catch((error) => {
-		  	console.log(error);
-		  	reject(error)
-		  	return res.send({error : error});
+		  	//console.log(error);
+		  	//reject(error)
+		  	//return res.send({error : error});
 		});
 	})
 }
