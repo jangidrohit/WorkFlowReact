@@ -18,6 +18,19 @@ console.log("**************************")
 	});
 }
 
+
+function getRangeCoins(req, res){
+   var body = _.get(req, 'body')   
+    rangesSchema.find({}, function(error, data){
+        if(error){
+            return res.send({error : error});
+        }else{
+            return res.send({result : data});
+        }
+    });
+}
+
 module.exports = {
-	rangeOfCoins : rangeOfCoins
+	rangeOfCoins : rangeOfCoins,
+	getRangeCoins:getRangeCoins
 };
