@@ -1,7 +1,7 @@
 import React from 'react'
 import './Report.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-
+import Search from '../Search/Search.Component'
 class Report extends React.Component {
 
 	constructor() {
@@ -15,7 +15,7 @@ class Report extends React.Component {
 				 "date":"Jan 06 2018",
 				 "price":"200",
 				 "changeRate":"100",
-				 "marketCap":"200",
+				 "marketCap":"20",
 				 "action":"Y"
 			  },
 			  {
@@ -24,7 +24,7 @@ class Report extends React.Component {
 				"date":"Jan 06 2018",
 				"price":"200",
 				"changeRate":"230",
-				"marketCap":"2000",
+				"marketCap":"20",
 				"action":"N"
 			 },
 			 {
@@ -33,26 +33,25 @@ class Report extends React.Component {
 				"date":"Jan 06 2018",
 				"price":"250",
 				"changeRate":"50",
-				"marketCap":"1000",
+				"marketCap":"0",
 				"action":"Y"
 			 }
 		   ]
 		}
 	 }
-
+	 onFilter(data){
+		console.log(data)
+	 }
 	 priceFormatter(cell, row){
 		return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 	  }
 
 	render(){
-		const { match} = this.props
-    	var name = match.params.name
-		
 		return (
 			<div>
 			<h4>Report</h4>
 			<div class="report-container">
-
+			<Search  onFilter={this.onFilter}/>
 			 <BootstrapTable data={this.state.data} striped={true} hover={true}>
 			      <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>#</TableHeaderColumn>
 			      <TableHeaderColumn dataField="name" dataSort={true}>Name</TableHeaderColumn>
