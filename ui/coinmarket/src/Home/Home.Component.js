@@ -32,6 +32,16 @@ class Home extends React.Component {
 
   }
 
+
+	ActionOption(cell, row){
+			debugger;
+		  return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+		}
+
+	DetailsOption(cell, row){
+	  return '<div class="chat-option"><i class="glyphicon glyphicon-list-alt"></i></div>';
+	}
+
 	render(){
 		const {history}=this.props
 		var options = {
@@ -39,19 +49,22 @@ class Home extends React.Component {
 				history.push('/chat/'+ row.name);
 			}
 		}
+
 		return (
 			<div>
 			<h3>Cryptocurrency Market Capitalizations</h3>
+
 			<div className="coins-details-container">
 			 <BootstrapTable data={this.state.data} options={options}  striped={true} hover={true}>
-			      <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true}>Name</TableHeaderColumn>
-			      <TableHeaderColumn dataField="symbol" dataSort={true}>Symbol</TableHeaderColumn>
-			      <TableHeaderColumn dataField="market_cap_usd" dataSort={true}>Market Cap</TableHeaderColumn>
-			      <TableHeaderColumn dataField="price_usd" dataSort={true}>Price (Usd)</TableHeaderColumn>
-			      <TableHeaderColumn dataField="24h_volume_usd" dataSort={true}>Valume(24)</TableHeaderColumn>
-			      <TableHeaderColumn dataField="total_supply" dataSort={true}>Supply</TableHeaderColumn>
-			      <TableHeaderColumn dataField="percent_change_24h" dataSort={true}>Change</TableHeaderColumn>
-			      <TableHeaderColumn dataField="name" dataSort={true}>Action</TableHeaderColumn>
+			      <TableHeaderColumn dataField="name" filter={ { type: 'RegexFilter', placeholder: 'Name' } } isKey={true} dataAlign="center" dataSort={true}>Name</TableHeaderColumn>
+			      <TableHeaderColumn dataField="symbol" filter={ { type: 'RegexFilter', placeholder: 'Symbol' } } dataSort={true}>Symbol</TableHeaderColumn>
+			      <TableHeaderColumn dataField="market_cap_usd" filter={ { type: 'RegexFilter', placeholder: 'Market cap' } } dataSort={true}>Market Cap</TableHeaderColumn>
+			      <TableHeaderColumn dataField="price_usd" filter={ { type: 'RegexFilter', placeholder: 'Price' } } dataSort={true}>Price (Usd)</TableHeaderColumn>
+			      <TableHeaderColumn dataField="24h_volume_usd" filter={ { type: 'RegexFilter', placeholder: 'Valume' } } dataSort={true}>Valume(24)</TableHeaderColumn>
+			      <TableHeaderColumn dataField="total_supply"  filter={ { type: 'RegexFilter', placeholder: 'Supply' } } dataSort={true}>Supply</TableHeaderColumn>
+			      <TableHeaderColumn dataField="percent_change_24h" filter={ { type: 'RegexFilter', placeholder: 'Change' } } dataSort={true}>Change</TableHeaderColumn>
+			      <TableHeaderColumn dataFormat={this.DetailsOption} width="80" >Graph</TableHeaderColumn>
+			      <TableHeaderColumn dataFormat={this.ActionOption}>Action</TableHeaderColumn>
 			  </BootstrapTable>
 
 			</div>
