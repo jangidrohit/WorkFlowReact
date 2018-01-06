@@ -40,7 +40,7 @@ class Home extends React.Component {
 
 		DetailsOption(cell, row){
 			debugger;
-		  return '<div> Amit </div> ';
+		  return '<div class="chat-option"><i class="glyphicon glyphicon-list-alt"></i></div>';
 		}
 
 	render(){
@@ -64,7 +64,7 @@ class Home extends React.Component {
 			      <TableHeaderColumn dataField="24h_volume_usd" filter={ { type: 'RegexFilter', placeholder: 'Valume' } } dataSort={true}>Valume(24)</TableHeaderColumn>
 			      <TableHeaderColumn dataField="total_supply"  filter={ { type: 'RegexFilter', placeholder: 'Supply' } } dataSort={true}>Supply</TableHeaderColumn>
 			      <TableHeaderColumn dataField="percent_change_24h" filter={ { type: 'RegexFilter', placeholder: 'Change' } } dataSort={true}>Change</TableHeaderColumn>
-			      <TableHeaderColumn dataFormat={this.DetailsOption} >View Details</TableHeaderColumn>
+			      <TableHeaderColumn dataFormat={this.DetailsOption} width="80" >Graph</TableHeaderColumn>
 			      <TableHeaderColumn dataFormat={this.ActionOption}>Action</TableHeaderColumn>
 			  </BootstrapTable>
 
