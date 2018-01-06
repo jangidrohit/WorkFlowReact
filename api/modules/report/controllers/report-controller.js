@@ -1,26 +1,25 @@
-var cron = require('node-cron');
 var mongoose = require('mongoose');
-var axios = require('axios');
-var coinSchema = require('../report-schema');
+var reportSchema = require('../report-schema');
+var _ = require('lodash');
 
-function getCoinDetails(){
-	axios.get('https://api.coinmarketcap.com/v1/ticker/')
-	.then(response => {
-		  console.log(" Old data deleting");
-		  coinSchema.remove({}, function(err){
-			console.log("data deleted");
-			if(err){
-				console.log(err);
-				return;
-			}
-			else{
-				console.log("new data saving");
-				coinSchema.collection.insert(response.data);
-				console.log("new data saved");
-			}
-		})
+function buySellCoins(req, res){
+	console.log("**************************")
+	return new Promise(function(resolve, reject) {
+	   var body = _.get(req, 'body')   
+
+	   var reportObj = new reportSchema(body);
+	   reportObj.save()
+	   	.then(function(res) {
+	   		console.log(res);
+	   		resolve(res)   		
+	   	})
+		.catch((error) => {
+		  	console.log(error);
+		  	reject(error)
+		});
 	})
-	.catch(error => {
-	  	console.log(error);
-	});
 }
+
+module.exports = {
+	buySellCoins : buySellCoins
+};
