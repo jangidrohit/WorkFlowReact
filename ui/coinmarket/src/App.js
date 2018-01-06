@@ -17,12 +17,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header></Header>
         <Router>
+         <div>
+         <Header></Header>
           <Switch>
             <Route exact  path="/" component={Home}/>
             <Route exact path="/report" component={Report}/>
           </Switch>
+         </div>
         </Router>
       </div>
     );

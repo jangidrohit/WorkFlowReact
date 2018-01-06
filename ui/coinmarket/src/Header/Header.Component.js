@@ -9,13 +9,11 @@ class Header extends React.Component {
 	render(){
 		return (
 			<header className="App-header">
-	         <h1 className="App-title">Welcome to Xcdify coin market</h1>
-				<Router>
+	        <h1 className="App-title">Welcome to Xcdify coin market</h1>
 		          <ul>
-			        <li><Link to="/">Home</Link></li>
-			        <li><Link to="/report">Report</Link></li>
+			        <li><Link to={"/"}>Home</Link></li>
+			        <li><Link to={"/report"}>Report</Link></li>
 			      </ul>
-		        </Router>
 	        </header>
         )
 	}
