@@ -23,7 +23,6 @@ function buySellCoins(req, res){
 }
 
 function getReportCoins(req, res){
-	return new Promise(function(resolve, reject) {
 	   var body = _.get(req, 'body')   
 	    reportSchema.find({}, function(error, reports){
 	        if(error){
@@ -32,7 +31,7 @@ function getReportCoins(req, res){
 	            return res.send({result : reports});
 	        }
 	    });
-	})
+	
 }
 
 module.exports = {
