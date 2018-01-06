@@ -8,6 +8,7 @@ function setup(app){
     app.post('/api/report', reportController.buySellCoins);
 	app.get('/api/report', reportController.getReportCoins);
 	app.post('/api/range', rangeController.rangeOfCoins);
+	app.get('/api/range', rangeController.getRangeCoins);
 };
 
 module.exports = {setup : setup};
