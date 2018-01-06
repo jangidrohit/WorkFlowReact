@@ -11,17 +11,18 @@ function getCoinsDetails(request, response){
     });
 }
 
-// getCoin Details By Dates between
-function getCoinDetailsByDates(pid){
-
-	coinSchema.findOne({id: pid}, function(err, res) {
-		console.log(res);
-		//logger.info("res2", res);
-      });
+function getCoinDetailsById(request, response){
+	coinDetails.findOne({id: request.params.id}, function(err, res) {
+		if(err){
+            return response.send({error : err});
+        }else{
+            return response.send({result : res});
+        }
+    });
 }
 
 
 module.exports = {
 	getCoinsDetails : getCoinsDetails,
-	getCoinDetailsByDates : getCoinDetailsByDates
+	getCoinDetailsById : getCoinDetailsById
 };
