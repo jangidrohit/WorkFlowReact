@@ -12,8 +12,6 @@ module.exports.init = function init(callback) {
 		cronJob.cronJobStart();
 		callback()
 	});
-
-
 };
 
 module.exports.start = function(callback) {
