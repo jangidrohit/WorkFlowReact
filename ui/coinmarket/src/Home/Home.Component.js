@@ -38,10 +38,9 @@ class Home extends React.Component {
 		  return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
 		}
 
-		DetailsOption(cell, row){
-			debugger;
-		  return '<div class="chat-option"><i class="glyphicon glyphicon-list-alt"></i></div>';
-		}
+	DetailsOption(cell, row){
+	  return '<div class="chat-option"><i class="glyphicon glyphicon-list-alt"></i></div>';
+	}
 
 	render(){
 		const {history}=this.props

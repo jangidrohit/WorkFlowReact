@@ -6,7 +6,6 @@ import Report from './Report/Report.Component'
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch
 } from 'react-router-dom'
 
