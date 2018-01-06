@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Header from './Header/Header.Component'
 import Home from './Home/Home.Component'
 import Report from './Report/Report.Component'
-
 import {
   BrowserRouter as Router,
   Route,
