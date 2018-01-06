@@ -17,15 +17,16 @@ class Home extends React.Component {
 
 
  componentDidMount() {
-    return fetch(`${appConfig.default.coinMarketRout}`, {
+    return fetch(`${appConfig.default.apiRoute}/coins`, {
 		method: 'GET',
 	})
 	.then((res)=> {
+		debugger;
 		return res.json();
 	})
 	.then(function(res){
 		this.setState({
-			data : res
+			data : res.result
 		})
 	}.bind(this))
 
