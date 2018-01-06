@@ -7,15 +7,31 @@ console.log("**************************")
    var body = _.get(req, 'body')   
 
    var rangeObj = new rangesSchema(body);
-   rangeObj.save()
-   	.then(function(data) {
-   		console.log(data);
-   		return res.send({result : data})   		
-   	})
-	.catch((error) => {
-	  	console.log(error);
-	  	return res.send({error : error});
-	});
+   rangesSchema.find({}).then((item, err) => {
+	   	if (item){
+	   		console.log("item")
+		   rangesSchema.update({id : body.id},body ,{upsert:true})
+		   	.then(function(data) {
+		   		console.log(data);
+		   		return res.send({result : data})   		
+		   	})
+			.catch((error) => {
+			  	console.log(error);
+			  	return res.send({error : error});
+			});
+	   	}
+	   	else{
+	   		rangeObj.save()
+		   	.then(function(data) {
+		   		console.log(data);
+		   		return res.send({result : data})   		
+		   	})
+			.catch((error) => {
+			  	console.log(error);
+			  	return res.send({error : error});
+			});
+	   	}
+   })
 }
 
 

@@ -1,10 +1,17 @@
 .report-container {
 	margin-top: 20px;
+	width: 90%;
+	margin: 0 auto;
 }
 
-h4 {
-    color: black;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
+.search-option {
+	padding:20px 0;
+	display: inline-block;
+    width: 100%;
+}
+
+.report-details {
+	padding:20px 0;
+	display: inline-block;
+    width: 100%;
 }
