@@ -47,10 +47,12 @@ class Report extends React.Component {
 	  }
 
 	render(){
+		
+		
 		return (
 			<div>
 			<h4>Report</h4>
-			<div class="report-container">
+			<div className="report-container">
 			<Search  onFilter={this.onFilter}/>
 			 <BootstrapTable data={this.state.data} striped={true} hover={true}>
 			      <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>#</TableHeaderColumn>
