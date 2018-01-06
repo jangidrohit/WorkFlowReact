@@ -22,6 +22,7 @@ class App extends Component {
             <Route exact  path="/" component={Home}/>
             <Route exact path="/report" component={Report}/>
             <Route exact path="/chart/:name" component={Chart}/>
+            
           </Switch>
          </div>
         </Router>
