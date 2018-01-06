@@ -9,11 +9,9 @@ var app = express();
 // Initialize Models
 module.exports.init = function init(callback) {
 	mongoose.connect(function (db) {
-		//cronJob.cronJobStart();
+		cronJob.cronJobStart();
 		callback()
 	});
-
-
 };
 
 module.exports.start = function(callback) {
@@ -33,10 +31,7 @@ module.exports.start = function(callback) {
 
 
  		var routes = require('./route');
-	console.log('+++++++++++++++++++')
-
- 		routes.setup(app)
-
+ 		routes.setup(app);
     	app.listen(port, function () {
     		console.log("Started server on " + port);
     	});

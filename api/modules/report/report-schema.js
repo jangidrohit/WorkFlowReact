@@ -11,5 +11,5 @@ var reportSchema = new Schema({
     action: String
 }); 
 
-var coinSchema =mongoose.model("Report", reportSchema)
-module.exports = coinSchema;
+var reportsSchema =mongoose.model("Report", reportSchema)
+module.exports = reportsSchema;
