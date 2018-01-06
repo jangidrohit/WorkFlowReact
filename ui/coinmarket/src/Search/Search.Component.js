@@ -1,4 +1,5 @@
 import React from 'react';
+import './Search.css';
 
 class Search extends React.Component {
     constructor() {
@@ -17,11 +18,10 @@ class Search extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="filter-option">
                 <label>Filter
-                {/* <input type=""  value={this.state.value} onChange={this.handleChange} /> */}
                 </label>
-                <select onChange={this.handleChange} value={this.state.value} >
+                <select onChange={this.handleChange} className="form-control" value={this.state.value} >
                     <option></option>
                     <option value="sale">Sale</option>
                     <option value="buy">Buy</option>

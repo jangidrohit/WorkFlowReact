@@ -3,6 +3,10 @@ import './Report.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import Search from '../Search/Search.Component';
 import * as appConfig from './../Config/Config';
+import _ from 'lodash';
+
+
+
 class Report extends React.Component {
 
 	constructor() {
@@ -10,13 +14,20 @@ class Report extends React.Component {
 		this.state = {
 
 		}
+		this.onFilter = this.onFilter.bind(this);
 	 }
-	//  onFilter(data){
-	// 	console.log(data);
-	//  }
+	 onFilter(data){
+		var filterd = _.filter(this.state.data, (d) => {
+			return d.action = data
+		});
+
+		this.setState({
+			data : filterd
+		})
+	 }
 
 	componentDidMount() {
-		return fetch(`${appConfig.default.apiReport}`, {
+		return fetch(`${appConfig.default.apiRoute}/report`, {
 			method: 'GET',
 		})
 		.then((res)=> {
@@ -31,13 +42,6 @@ class Report extends React.Component {
 	
 	  }
 
-	//  reportList() {
-	// 	$.getJSON('https://localhost/api/report')
-	// 	  .then((results)  =>{
-	// 		console.log('afsafafdsasd');			
-	// 	  }) 
-	//   }
-	
 
 	 priceFormatter(cell, row){
 		return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
@@ -47,20 +51,19 @@ class Report extends React.Component {
 		
 		
 		return (
-			<div>
-			<h4>Report</h4>
+			<div className="search-option">
 			<div className="report-container">
-			<Search  onFilter={this.onFilter}/>
-			 <BootstrapTable data={this.state.data} striped={true} hover={true}>
-			      <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>#</TableHeaderColumn>
-			      <TableHeaderColumn dataField="name" dataSort={true}>Name</TableHeaderColumn>
-				  <TableHeaderColumn dataField="date" dataSort={true}>Date</TableHeaderColumn>
-				  <TableHeaderColumn dataField="price" dataSort={true} dataFormat={this.priceFormatter}>Price</TableHeaderColumn>
-				  <TableHeaderColumn dataField="changeRate" dataSort={true} dataFormat={this.priceFormatter}>Change Rate</TableHeaderColumn>
-			      <TableHeaderColumn dataField="marketCap" dataSort={true} dataFormat={this.priceFormatter}>Market Cap</TableHeaderColumn>
-				  <TableHeaderColumn dataField="action" dataSort={true} >Action</TableHeaderColumn>
-			  </BootstrapTable>
-
+			<Search className="form-control" onFilter={this.onFilter}/>
+			<div className="report-details">
+				 <BootstrapTable data={this.state.data} striped={true} hover={true}>
+				      <TableHeaderColumn dataField="name" isKey={true} dataSort={true}>Name</TableHeaderColumn>
+					  <TableHeaderColumn dataField="date" dataSort={true}>Date</TableHeaderColumn>
+					  <TableHeaderColumn dataField="price" dataSort={true} dataFormat={this.priceFormatter}>Price</TableHeaderColumn>
+					  <TableHeaderColumn dataField="changeRate" dataSort={true} dataFormat={this.priceFormatter}>Change Rate</TableHeaderColumn>
+				      <TableHeaderColumn dataField="marketCap" dataSort={true} dataFormat={this.priceFormatter}>Market Cap</TableHeaderColumn>
+					  <TableHeaderColumn dataField="action" dataSort={true} >Action</TableHeaderColumn>
+				  </BootstrapTable>
+			</div>
 			</div>
 			</div>
         )
