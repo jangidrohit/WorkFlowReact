@@ -57,8 +57,8 @@ class Report extends React.Component {
 				      <TableHeaderColumn dataField="name" isKey={true} dataSort={true}>Name</TableHeaderColumn>
 					  <TableHeaderColumn dataField="date" dataSort={true}>Date</TableHeaderColumn>
 					  <TableHeaderColumn dataField="price" dataSort={true} dataFormat={this.priceFormatter}>Price</TableHeaderColumn>
-					  <TableHeaderColumn dataField="changeRate" dataSort={true} dataFormat={this.priceFormatter}>Change Rate</TableHeaderColumn>
-				      <TableHeaderColumn dataField="marketCap" dataSort={true} dataFormat={this.priceFormatter}>Market Cap</TableHeaderColumn>
+					  <TableHeaderColumn dataField="change_rate" dataSort={true} dataFormat={this.priceFormatter}>Change Rate</TableHeaderColumn>
+				      <TableHeaderColumn dataField="market_cap" dataSort={true} dataFormat={this.priceFormatter}>Market Cap</TableHeaderColumn>
 					  <TableHeaderColumn dataField="action" dataSort={true} >Action</TableHeaderColumn>
 				  </BootstrapTable>
 			</div>
