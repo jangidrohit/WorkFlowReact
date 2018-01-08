@@ -1,5 +1,5 @@
 const Config  = {
-	apiRoute : 'http://localhost:3001/api',
+	apiRoute : 'https://xcd-coin-market.herokuapp.com/api',
 	coinMarketRout : 'https://api.coinmarketcap.com/v1/ticker/',
 	chartApi : 'https://graphs.coinmarketcap.com/currencies/',
 };

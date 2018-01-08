@@ -36,15 +36,18 @@ class Home extends React.Component {
   	}
 
   	onSaveRange (){
-  		debugger;
   		var data = {
   			min : this.state.minRange,
   			max : this.state.maxRange,
-  			id : 121
+  			id : 1
   		}
   		return fetch(`${appConfig.default.apiRoute}/range`, {
-		method: 'POST',
-		body: data
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+			  'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+			  'Content-Type': 'application/json; charset=utf-8'
+			  }
 		})
 		.then((res)=> {
 			return res.json();
@@ -53,15 +56,6 @@ class Home extends React.Component {
 			console.log('Range saved');
 		}.bind(this))
   	}
-	// ActionOption(cell, row){
-	// 		if (row.percent_change_24h <= this.state.minRange) {
-	// 			 return '<button type="button" class="btn btn-success">Buy</button> ';
-	// 		}
-	// 		if (row.percent_change_24h >= this.state.maxRange) {
-	// 			 return '<button type="button" class="btn btn-primary">Sell</button> ';
-	// 		}
-		 
-	// 	}
 
 	DetailsOption(cell, row){
 	  return '<div class="chat-option"><i class="glyphicon glyphicon-list-alt"></i></div>';
