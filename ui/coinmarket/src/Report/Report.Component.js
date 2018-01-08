@@ -48,8 +48,6 @@ class Report extends React.Component {
 	  }
 
 	render(){
-		
-		
 		return (
 			<div className="search-option">
 			<div className="report-container">
