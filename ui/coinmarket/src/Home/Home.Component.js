@@ -2,7 +2,7 @@ import React from 'react'
 import './Home.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import * as appConfig from './../Config/Config';
-import * as actions from '../redux/Action/action';
+import * as actions from '../redux/Action/homeAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
@@ -84,7 +84,7 @@ class Home extends React.Component {
 				</div>
 
 				<div className="coins-details">
-				 <BootstrapTable data={formdate.coins} options={options}  striped={true} hover={true}>
+				 <BootstrapTable data={formdate.home.coins} options={options}  striped={true} hover={true}>
 				      <TableHeaderColumn dataField="name" filter={ { type: 'RegexFilter', placeholder: 'Name' } } isKey={true} dataAlign="center" dataSort={true}>Name</TableHeaderColumn>
 				      <TableHeaderColumn dataField="symbol" filter={ { type: 'RegexFilter', placeholder: 'Symbol' } } dataSort={true}>Symbol</TableHeaderColumn>
 				      <TableHeaderColumn dataField="market_cap_usd" filter={ { type: 'RegexFilter', placeholder: 'Market cap' } } dataSort={true}>Market Cap</TableHeaderColumn>

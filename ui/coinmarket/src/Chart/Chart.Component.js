@@ -24,9 +24,7 @@ class Chart extends React.Component {
 
     componentDidMount() {
  
-        const { match, formdate} = this.props
-
-        
+        const { match, formdate} = this.props        
 
     	var name = (match.params.name.split(' ')).join('-');
 		fetch(`${appConfig.default.chartApi}${name}`, { method: 'GET'})

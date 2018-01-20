@@ -3,14 +3,17 @@ import './Report.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import Search from '../Search/Search.Component';
 import * as appConfig from './../Config/Config';
+import * as actions from '../redux/Action/reportAction';
 import _ from 'lodash';
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';	
 
 
 
 class Report extends React.Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 
 		}
@@ -27,19 +30,9 @@ class Report extends React.Component {
 	 }
 
 	componentDidMount() {
-		return fetch(`${appConfig.default.apiRoute}/report`, {
-			method: 'GET',
-		})
-		.then((res)=> {
-			console.log('adsadadadsasd');
-			return res.json();
-		})
-		.then(function(res){
-			this.setState({
-				data : res.result
-			})
-		}.bind(this))
-	
+
+		const {actions} = this.props;
+		actions.onGetReport();	
 	  }
 
 
@@ -68,4 +61,12 @@ class Report extends React.Component {
 	}
 }
 
-export default Report;
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(actions, dispatch)
+	};
+}
+
+export default connect(
+  mapDispatchToProps
+)(Report)
