@@ -4,6 +4,9 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import * as appConfig from './../Config/Config';
 import {LineChart} from 'react-easy-chart';
 import _ from 'lodash';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 
 class Chart extends React.Component {
     constructor(props) {
@@ -15,9 +18,16 @@ class Chart extends React.Component {
             price_usd: [],
             volume_usd: []
 		};
+
+
 	}
+
     componentDidMount() {
-        const { match} = this.props
+ 
+        const { match, formdate} = this.props
+
+        
+
     	var name = (match.params.name.split(' ')).join('-');
 		fetch(`${appConfig.default.chartApi}${name}`, { method: 'GET'})
 		  .then(response => response.json())
@@ -46,9 +56,21 @@ class Chart extends React.Component {
 	}
 	render(){
         console.log(this);
-        const {match}=this.props
+        const {match ,formdate}=this.props
+
+        var selectedCoin = _.find(formdate.coins, function(coin){
+            return coin.name === match.params.name;
+        }); 
+
 		return (
 			<div>
+                <div>
+                {
+                    selectedCoin && <ul>
+                        {selectedCoin.name}
+                    </ul>
+                }
+                </div>
 			    <h4>{match.params.name}</h4>
                 <LineChart
                     axes
@@ -79,4 +101,17 @@ class Chart extends React.Component {
 	}
 }
 
-export default Chart;
+
+
+const mapStateToProps = (state, ownProps) => {
+    console.log(state, ownProps)
+    return {
+        formdate: state
+    };
+}
+
+export default connect(
+  mapStateToProps
+)(Chart)
+
+
