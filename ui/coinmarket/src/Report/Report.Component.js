@@ -8,15 +8,12 @@ import _ from 'lodash';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';	
 
-
+	
 
 class Report extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-
-		}
 		this.onFilter = this.onFilter.bind(this);
 	 }
 	 onFilter(data){
@@ -41,12 +38,14 @@ class Report extends React.Component {
 	  }
 
 	render(){
+
+		const {reportData}=this.props
 		return (
 			<div className="search-option">
 			<div className="report-container">
 			<Search className="form-control" onFilter={this.onFilter}/>
 			<div className="report-details">
-				 <BootstrapTable data={this.state.data} striped={true} hover={true}>
+				 <BootstrapTable data={reportData.report.graphData} striped={true} hover={true}>
 				      <TableHeaderColumn dataField="name" isKey={true} dataSort={true}>Name</TableHeaderColumn>
 					  <TableHeaderColumn dataField="date" dataSort={true}>Date</TableHeaderColumn>
 					  <TableHeaderColumn dataField="price" dataSort={true} dataFormat={this.priceFormatter}>Price</TableHeaderColumn>
@@ -61,6 +60,14 @@ class Report extends React.Component {
 	}
 }
 
+const mapStateToProps = (state, ownProps) => {
+    console.log(state, ownProps)
+    return {
+        reportData: state
+    };
+}
+
+
 function mapDispatchToProps(dispatch) {
 	return {
 		actions: bindActionCreators(actions, dispatch)
@@ -68,5 +75,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
+  mapStateToProps,
   mapDispatchToProps
 )(Report)
