@@ -1,23 +1,25 @@
 
 import * as actionTypes from '../ActionTypes';
 
-const initialObj = {
-  reportData : 0
-}
+const chatJson = {
+  text:"",
+  type:""
+} 
 
-const reportReducer = (state = initialObj, action) => {
+const onChatData = (state = chatJson, action) => {
   debugger;
   switch (action.type) {
-    case actionTypes.REPORT_DATA:
+    case actionTypes.SENDER_CHAT:
       const change =
       {
         ...state,
         ...action
       }
       return change;
+
     default:      
-      return state
+      return state;
   }
 }
 
-export default reportReducer
+export default onChatData

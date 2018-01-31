@@ -5,6 +5,7 @@ import * as appConfig from './../Config/Config';
 import * as actions from '../redux/Action/homeAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+import Chat from '../chatBot/Chat';
 
 class Home extends React.Component {
 
@@ -22,7 +23,7 @@ class Home extends React.Component {
    }
 
 
- componentDidMount() {
+ componentWillMount() {
 
 	const {actions, formdate} = this.props;
 	actions.onGetCoinDetails();
@@ -56,6 +57,12 @@ class Home extends React.Component {
   	// 		alert('Save Range')
   	// 	}
   	// }
+  	
+	onChatFunc(e){
+		const {history, formdate, actions}=this.props
+		history.push('/Chat/');
+		actions.onChatStart()
+	}
 
 	DetailsOption(cell, row){
 	  return '<div class="chat-option" ><i class="glyphicon glyphicon-list-alt" ></i></div>';
@@ -75,6 +82,7 @@ class Home extends React.Component {
 			<div className="coins-details-container">
 				<div className="coins-details-header">
 					<div className="coin-title"><h3>Cryptocurrency Market Capitalizations</h3></div>
+					<input type="button" onClick={(e)=>{this.onChatFunc(e)}} value="Chat"/>
 					<div className="coin-range">
 						<div className="min-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChangeHandler(e)}} placeholder="Min range" value={formdate.minRange} name="minRange"/></div>
 						<div className="max-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChangeHandler(e)}} placeholder="Max range" value={formdate.maxRange} name="maxRange"/></div>
@@ -84,7 +92,7 @@ class Home extends React.Component {
 				</div>
 
 				<div className="coins-details">
-				 <BootstrapTable data={formdate.home.coins} options={options}  striped={true} hover={true}>
+				 <BootstrapTable data={formdate.coins} options={options}  striped={true} hover={true}>
 				      <TableHeaderColumn dataField="name" filter={ { type: 'RegexFilter', placeholder: 'Name' } } isKey={true} dataAlign="center" dataSort={true}>Name</TableHeaderColumn>
 				      <TableHeaderColumn dataField="symbol" filter={ { type: 'RegexFilter', placeholder: 'Symbol' } } dataSort={true}>Symbol</TableHeaderColumn>
 				      <TableHeaderColumn dataField="market_cap_usd" filter={ { type: 'RegexFilter', placeholder: 'Market cap' } } dataSort={true}>Market Cap</TableHeaderColumn>
@@ -94,7 +102,6 @@ class Home extends React.Component {
 				      <TableHeaderColumn dataField="percent_change_24h" filter={ { type: 'RegexFilter', placeholder: 'Change' } } dataSort={true}>Change</TableHeaderColumn>
 				      <TableHeaderColumn dataFormat={this.DetailsOption} width="80"  >Graph</TableHeaderColumn>
 				  </BootstrapTable>
-
 				</div>
 			</div>
         )

@@ -45,7 +45,7 @@ class Report extends React.Component {
 			<div className="report-container">
 			<Search className="form-control" onFilter={this.onFilter}/>
 			<div className="report-details">
-				 <BootstrapTable data={reportData.report.graphData} striped={true} hover={true}>
+				 <BootstrapTable data={reportData.report.reportData} striped={true} hover={true}>
 				      <TableHeaderColumn dataField="name" isKey={true} dataSort={true}>Name</TableHeaderColumn>
 					  <TableHeaderColumn dataField="date" dataSort={true}>Date</TableHeaderColumn>
 					  <TableHeaderColumn dataField="price" dataSort={true} dataFormat={this.priceFormatter}>Price</TableHeaderColumn>

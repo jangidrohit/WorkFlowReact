@@ -4,6 +4,7 @@ import Header from './Header/Header.Component'
 import Home from './Home/Home.Component'
 import Report from './Report/Report.Component'
 import Chart from './Chart/Chart.Component'
+import Chat from './chatBot/Chat'
 import {
   BrowserRouter as Router,
   Route,
@@ -22,7 +23,7 @@ class App extends Component {
             <Route exact  path="/" component={Home}/>
             <Route exact path="/report" component={Report}/>
             <Route exact path="/chart/:name" component={Chart}/>
-            
+            <Route exact path="/chat" component={Chat}/>
           </Switch>
          </div>
         </Router>

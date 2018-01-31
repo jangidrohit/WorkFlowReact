@@ -1,6 +1,13 @@
 import * as appConfig from '../../Config/Config';
 import * as action from '../Action';
+import { RSAA } from 'redux-api-middleware'; // RSAA = '@@redux-api-middleware/RSAA'
 
+var chatJson = {
+  text: "Hi, Please select a coin",
+  type: "option",
+  selectItem : ["BitCoin", "VoCoin", "YeCoin"]
+}
+ 
 export const onSaveRangeAct = (data) => {
   return (dispatch) => {
     fetch(`${appConfig.default.apiRoute}/range`, {
@@ -21,6 +28,7 @@ export const onSaveRangeAct = (data) => {
 }
 
 export const onGetCoinDetails = (coins) => {
+  debugger;
   return (dispatch) => {
      fetch(`${appConfig.default.apiRoute}/coins`, {
       method: 'GET',
@@ -35,4 +43,12 @@ export const onGetCoinDetails = (coins) => {
       console.log(err)
     })
   } 
+}
+
+
+export const onChatStart = () => {
+  debugger;
+  return (dispatch) => {
+    dispatch(action.onChat(chatJson));
+  }
 }

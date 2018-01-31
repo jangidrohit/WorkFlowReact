@@ -31,7 +31,6 @@ export const navigateToChart = detail => {
   }
 }
 
-
 //Chart Action
 export const onGetCoin = graphData => {
   return {
@@ -40,16 +39,28 @@ export const onGetCoin = graphData => {
   }
 }
 
-
-//Report
-
-
-
-export const onGetReportData = graphData => {
+export const onGetReportData = reportData => {
   return {
     type: actionTypes.REPORT_DATA,
-    graphData
+    reportData
   }
 }
+
+export const onChat = chatData => {
+  debugger;
+  return {
+    type: actionTypes.CHAT_DATA,
+    chatData
+  }
+}
+
+export const onRequestChat = chatData => {
+  debugger;
+  return {
+    type: actionTypes.SENDER_CHAT,
+    chatData
+  }
+}
+
 
 
