@@ -5,45 +5,24 @@ import * as actions from '../redux/Action/chatAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import './ChatClass.css';
-import Dropdown from 'react-dropdown'
 // import chat from './chat.html'
 
 class Chat extends React.Component {
 
  	constructor(props) {
 	  super(props);
-      this.mainHtml = [
-      	<div> </div>
-	  ];
-
-	  this.inputHtml =[
-      	<div> </div>
-	  ];
-
 	  this.state = {
-	  	data :""
+	  	data :"",
+	  	messages : [],
+		lastUserMessage : "",
+		botMessage : "", 
+		botName : 'Chatbot',
+		inputTitle:""
 	  }
 	}
 
-	onSend(e){
-
-		this.mainHtml.push(<div className="container">
-				  <span className="time-right">{this.state.data}</span>
-				</div>);
-	    				
-	   	this.setState({
-   			mainHtml:this.mainHtml
-    	});
-
-		const {actions}=this.props;
-	}
-
-
 	onChangeHandler(evt){
 		this.setState({data: evt.target.value});
-		this.mainHtml = [
-      		<div> </div>
-		];
 	}
 
 	_onSelect(e){
@@ -53,47 +32,65 @@ class Chat extends React.Component {
 	}
 
 
-	componentWillMount(){
-		const {formData}=this.props
-		this.changeHtml(formData);
+	nextQuestion(){
+		const {actions}=this.props;
+		actions.onGetNextQuestion("number");	
 	}
 
+
+	newEntry() {
+  		if (this.inputTitle != undefined && this.inputTitle.value != "") {
+		    this.state.lastUserMessage = document.getElementById("chatbox").value;
+
+		    this.inputTitle.value = "";
+
+		    this.state.messages.push(this.state.lastUserMessage);
+
+		    this.nextQuestion()
+			}
+
+		    this.state.messages.push(this.state.botMessage);
+
+	        for (var i = 1; i < 8; i++) {
+		      if (this.state.messages[this.state.messages.length - i])
+		        document.getElementById("chatlog" + i).innerHTML = this.state.messages[this.state.messages.length - i];	  		
+	  		}	
+		
+	}
+
+
+
+	onSend(evt) {
+	    this.inputTitle.value = "";
+	    this.newEntry()	
+	}
 
 	componentDidMount(){
-		const {formData}=this.props;
-		actions.onGetNextQuestion("number");
+		debugger;
+		const {formData, actions}=this.props;
+		this.state.botMessage = formData.chatData.text;		
+		this.newEntry();
 	}
 
-	changeHtml(formData){
-		this.setState({
-   			inputHtml:this.inputHtml
-    	});
-    	if(formData.chatData.type == "option"){
-    		this.inputHtml.push(
-			    <Dropdown options={formData.chatData.selectItem} className="inputContainer"  onChange={(e) => {this._onSelect(e)}} placeholder="Select an option" />
-    		);
-    	}
-    	else{
-    		this.inputHtml.push(
-				<input type={formData.type} className="inputContainer" placeholder={formData.value}  onChange={(e)=>{this.onChangeHandler(e)}}/>
-    		);
-    	}
-    	return;
-	}
 
 	render(){
 		const {formData}=this.props;
 		return (
-			<div>				
-				{this.state.inputHtml}
-				<input name="submitmsg" type="button"  id="submitmsg" onClick={(e)=>{this.onSend(e)}} value="Send" />
-
-				<div className="container darker">
-				  <p></p>
-				  <span className="time-left">{formData.chatData.text}</span>
-				</div>
-				{this.state.mainHtml}
+		<div id='bodybox'>
+ 			 <div id='chatboarder'>
+ 			 	<p id="chatlog7" className="container darker">&nbsp;</p>
+			    <p id="chatlog6" className="container darker">&nbsp;</p>
+			    <p id="chatlog5" className="container darker">&nbsp;</p>
+			    <p id="chatlog4" className="container darker">&nbsp;</p>
+			    <p id="chatlog3" className="container darker">&nbsp;</p>
+			    <p id="chatlog2" className="container darker">&nbsp;</p>
+			    <p id="chatlog1" className="container darker">&nbsp;</p>				
+				<input type={formData.chatData.type} id="chatbox" className="inputContainer"
+				ref={el => this.inputTitle = el}
+				 placeholder={formData.value}  onChange={(e)=>{this.onChangeHandler(e)}}/>
+				<input name="submitmsg" type="submit"  id="submitmsg" className="btmInputContainer" onClick={(e)=>{this.onSend(e)}} value="Send" />		
 			</div>
+        </div>
         );
 	}
 };
@@ -101,8 +98,7 @@ class Chat extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-	debugger;
-    console.log(state, ownProps)
+    console.log(state, ownProps);
     return {
         formData: state
     };
