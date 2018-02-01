@@ -33,15 +33,15 @@ class Chat extends React.Component {
 
 
 	nextQuestion(){
-		const {actions}=this.props;
-		actions.onGetNextQuestion("number");	
+		const {actions, formData}=this.props;
+		actions.onGetNextQuestion("0");
+		this.state.botMessage = formData.chatData.text;		
 	}
 
 
 	newEntry() {
-  		if (this.inputTitle != undefined && this.inputTitle.value != "") {
-		    this.state.lastUserMessage = document.getElementById("chatbox").value;
-
+  		if (this.state.data != "") {
+		    this.state.lastUserMessage = this.state.data;
 		    this.inputTitle.value = "";
 
 		    this.state.messages.push(this.state.lastUserMessage);
@@ -49,7 +49,7 @@ class Chat extends React.Component {
 		    this.nextQuestion()
 			}
 
-		    this.state.messages.push(this.state.botMessage);
+		    this.state.messages.push("<b>BOT : </b>" + this.state.botMessage);
 
 	        for (var i = 1; i < 8; i++) {
 		      if (this.state.messages[this.state.messages.length - i])
@@ -57,8 +57,6 @@ class Chat extends React.Component {
 	  		}	
 		
 	}
-
-
 
 	onSend(evt) {
 	    this.inputTitle.value = "";

@@ -3,9 +3,8 @@ import * as action from '../Action';
 import { RSAA } from 'redux-api-middleware'; // RSAA = '@@redux-api-middleware/RSAA'
 
 var chatJson = {
-  text: "Hi, Please select a coin",
-  type: "option",
-  selectItem : ["BitCoin", "VoCoin", "YeCoin"]
+  text: "Hi, What I can do for you ?",
+  type: "text"
 }
  
 export const onSaveRangeAct = (data) => {
