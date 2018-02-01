@@ -17,7 +17,8 @@ class Chat extends React.Component {
 		lastUserMessage : "",
 		botMessage : "", 
 		botName : 'Chatbot',
-		inputTitle:""
+		inputTitle:"",
+		process:0
 	  }
 	}
 
@@ -25,19 +26,29 @@ class Chat extends React.Component {
 		this.setState({data: evt.target.value});
 	}
 
-	_onSelect(e){
-		this.setState({
-			data : e.value
-		});
-	}
-
-
 	nextQuestion(){
 		const {actions, formData}=this.props;
-		actions.onGetNextQuestion("0");
-		this.state.botMessage = formData.chatData.text;		
+		var chat = ["answer","number","email","text","dob"]
+		actions.onGetNextQuestion(chat[this.state.process]);
+	    this.state.process += 1;
+	
 	}
 
+	componentWillReceiveProps(nextProps){
+		debugger;
+		this.state.botMessage = nextProps.formData.chatData.text;
+		this.state.data = "";
+		this.botData()	
+	}
+
+	botData(){
+	    this.state.messages.push("<b>BOT : </b>" + this.state.botMessage);
+
+        for (var i = 1; i < 8; i++) {
+	      if (this.state.messages[this.state.messages.length - i])
+	        document.getElementById("chatlog" + i).innerHTML = this.state.messages[this.state.messages.length - i];	  		
+  		}
+	}
 
 	newEntry() {
   		if (this.state.data != "") {
@@ -45,17 +56,8 @@ class Chat extends React.Component {
 		    this.inputTitle.value = "";
 
 		    this.state.messages.push(this.state.lastUserMessage);
-
 		    this.nextQuestion()
 			}
-
-		    this.state.messages.push("<b>BOT : </b>" + this.state.botMessage);
-
-	        for (var i = 1; i < 8; i++) {
-		      if (this.state.messages[this.state.messages.length - i])
-		        document.getElementById("chatlog" + i).innerHTML = this.state.messages[this.state.messages.length - i];	  		
-	  		}	
-		
 	}
 
 	onSend(evt) {
@@ -67,7 +69,7 @@ class Chat extends React.Component {
 		debugger;
 		const {formData, actions}=this.props;
 		this.state.botMessage = formData.chatData.text;		
-		this.newEntry();
+		this.botData();
 	}
 
 
