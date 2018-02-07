@@ -63,4 +63,20 @@ export const onRequestChat = chatData => {
 }
 
 
+export const onRequestQues = receiveChat => {
+  debugger;
+  return {
+    type: actionTypes.RECEIVE_CHAT,
+    receiveChat
+  }
+}
+
+export const onQues = question => {
+  debugger;
+  return {
+    type: actionTypes.QUESTION,
+    question
+  }
+}
+
 

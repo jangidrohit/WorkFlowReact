@@ -5,8 +5,9 @@ const initialObj = {
   maxRange:0,
   minRange:0,
   coins:[],
-  text: "",
-  type: ""
+  chatData: [],
+  messages:[],
+  question:""
 } 
 
 const todos = (state = initialObj, action) => {
@@ -41,8 +42,30 @@ const todos = (state = initialObj, action) => {
       return chat;
 
     case actionTypes.SENDER_CHAT:
-      return action;
+      const message =
+      {
+        ...state,
+        ...action
+      }
+      return  message;
 
+     case actionTypes.RECEIVE_CHAT:{
+      const rece = {
+        ...state,
+        ...action
+      }
+      return rece;
+    }
+
+     case actionTypes.QUESTION :{
+      const ques = {
+        ...state,
+        ...action
+      }
+      return ques;
+     }
+
+     
     default:      
       return state;
   }

@@ -48,6 +48,6 @@ export const onGetCoinDetails = (coins) => {
 export const onChatStart = () => {
   debugger;
   return (dispatch) => {
-    dispatch(action.onChat(chatJson));
+    dispatch(action.onRequestChat(chatJson));
   }
 }

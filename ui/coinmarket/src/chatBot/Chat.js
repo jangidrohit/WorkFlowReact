@@ -5,6 +5,7 @@ import * as actions from '../redux/Action/chatAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import './ChatClass.css';
+import Messages from './Messages'
 // import chat from './chat.html'
 
 class Chat extends React.Component {
@@ -26,69 +27,85 @@ class Chat extends React.Component {
 		this.setState({data: evt.target.value});
 	}
 
-	nextQuestion(){
-		const {actions, formData}=this.props;
-		var chat = ["answer","number","email","text","dob"]
-		actions.onGetNextQuestion(chat[this.state.process]);
-	    this.state.process += 1;
+	// nextQuestion(){
+	// 	const {actions, formData}=this.props;
+	// 	var chat = ["answer","number","email","text","dob"]
+	// 	actions.onGetNextQuestion(chat[this.state.process]);
+	//     this.state.process += 1;
 	
+	// }
+
+	botData(){	
+		const {actions}=this.props;
+		var chat = ["number","email","text","dob"]
+	    actions.onRequestQuestion(chat[this.state.process]);
+	    this.state.process += 1;
+
+    //     for (var i = 1; i <= 8; i++) {
+	   //    if (this.state.messages[this.state.messages.length - i])
+	   //      document.getElementById("chatlog" + i).innerHTML = this.state.messages[this.state.messages.length - i];	  		
+  		// }
 	}
 
-	componentWillReceiveProps(nextProps){
-		debugger;
-		this.state.botMessage = nextProps.formData.chatData.text;
-		this.state.data = "";
+	// newEntry() {
+ //  		if (this.state.data != "") {
+	// 	    this.state.lastUserMessage = this.state.data;
+	// 	    this.inputTitle.value = "";
+
+	// 	    this.state.messages.push("User"+this.state.lastUserMessage);
+	// 	    this.nextQuestion()
+	// 		}
+	// }
+
+	onSend(evt) {
+		const {actions}=this.props;
+		this.inputTitle.value = ""
+	    actions.onChangeInput(this.inputTitle.value);
 		this.botData()	
 	}
 
-	botData(){
-	    this.state.messages.push("<b>BOT : </b>" + this.state.botMessage);
-
-        for (var i = 1; i < 8; i++) {
-	      if (this.state.messages[this.state.messages.length - i])
-	        document.getElementById("chatlog" + i).innerHTML = this.state.messages[this.state.messages.length - i];	  		
-  		}
+	componentWillMount(){
+		const {actions, formData}=this.props;
+	    this.state.messages.push(formData.chatData.text);
 	}
 
-	newEntry() {
-  		if (this.state.data != "") {
-		    this.state.lastUserMessage = this.state.data;
-		    this.inputTitle.value = "";
-
-		    this.state.messages.push(this.state.lastUserMessage);
-		    this.nextQuestion()
+	// componentDidMount(){
+	// 	debugger;
+	// 	const {formData, actions}=this.props;
+	// 	this.state.botMessage = formData.chatData.text;		
+	// 	this.botData();
+	// }
+	componentDidReceiveProps() {
+		const {formData}=this.props;
+		formData.chatData.map((res) => {
+			if(res.isSuccess == false){
+				res.isSuccess = true;
 			}
+		})
 	}
-
-	onSend(evt) {
-	    this.inputTitle.value = "";
-	    this.newEntry()	
-	}
-
-	componentDidMount(){
-		debugger;
-		const {formData, actions}=this.props;
-		this.state.botMessage = formData.chatData.text;		
-		this.botData();
-	}
-
 
 	render(){
-		const {formData}=this.props;
+		const {formData}=this.props;	
+
 		return (
-		<div id='bodybox'>
- 			 <div id='chatboarder'>
- 			 	<p id="chatlog7" className="container darker">&nbsp;</p>
-			    <p id="chatlog6" className="container darker">&nbsp;</p>
-			    <p id="chatlog5" className="container darker">&nbsp;</p>
-			    <p id="chatlog4" className="container darker">&nbsp;</p>
-			    <p id="chatlog3" className="container darker">&nbsp;</p>
-			    <p id="chatlog2" className="container darker">&nbsp;</p>
-			    <p id="chatlog1" className="container darker">&nbsp;</p>				
-				<input type={formData.chatData.type} id="chatbox" className="inputContainer"
+		<div className='sc-chat-window'>
+			<div className="sc-header">
+			</div>
+			<div>
+	 			 {
+	 			 	formData.chatData.map((message, i)=> {
+ 			 		    let contentClassList =  message.author === "Me" ? "sent" : "received";
+ 			 			return <div className = {contentClassList}> {message.text}</div>
+ 			 			}
+	 			 	)		 	 			 	
+				}
+			</div>
+			<div className="sc-user-input">	 					
+				<input type={formData.chatData.type} id="chatbox" className="sc-user-input--text"
 				ref={el => this.inputTitle = el}
 				 placeholder={formData.value}  onChange={(e)=>{this.onChangeHandler(e)}}/>
-				<input name="submitmsg" type="submit"  id="submitmsg" className="btmInputContainer" onClick={(e)=>{this.onSend(e)}} value="Send" />		
+
+				<input name="submitmsg" type="submit"  id="submitmsg" className="sc-user-input--send-icon-wrapper" onClick={(e)=>{this.onSend(e)}} value="Send" />		
 			</div>
         </div>
         );
