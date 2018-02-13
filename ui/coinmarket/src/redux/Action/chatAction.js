@@ -1,54 +1,72 @@
 import * as appConfig from '../../Config/Config';
 import * as action from '../Action';
+import _ from 'lodash';
 
 var userMessages = [];
 var i = 0;
-var questions = {
-		number:{
-			type: "number",
-			text: "Please enter mobile number",
-			author:'Received',
-			isSuccess: false
+var questions = [{
+		type: "text",
+		text: "Hi, What can I do for you",
+		author:'Received',
+		isSuccess: false,
+		step: 1
 	},
-		query:{
-			type: "text",
-			text: "Please enter your query",
-			author:'Received',
-			isSuccess: false
+	{
+		type: "number",
+		text: "Please enter mobile number",
+		author:'Received',
+		isSuccess: false,
+		step: 2
 	},
-		dob:{
-			type: "text",
-			text: "Please enter DOB",
-			author:'Received',
-			isSuccess: false
+	{
+		type: "date",
+		text: "Please enter DOB",
+		author:'Received',
+		isSuccess: false,
+		step:2
 	},
-		price:{
-			type:"text",
-			text:"The latest price is 20000. Do you want Sell or Buy",
-			author:'Received',
-			isSuccess: false
-	},
-		email:{
-			type:"text",
-			text:"Please enter email",
-			author:'Received',
-			isSuccess: false
-	}
-}
+	{
+		type:"email",
+		text:"Please enter email",
+		author:'Received',
+		isSuccess: false,
+		step:2
+	},	
+	{
+		type:"suggest",
+		text:"The latest price is 20000. Do you want Sell or Buy",
+		author:'Received',
+		isSuccess: false,
+		step:2
+	}]
 
+
+// var initialStep = {
+// 	text : "Hi, What can I do for you",
+// 	type: "text",
+// 	isComplete : false
+// }
 
 
 export const onChangeInput = (text) => {
 	debugger;
-	if(text){
-		return (dispatch) => {
-			var userData = {
-				text: text,
-				author: 'Me'
+	return (dispatch) => {
+			debugger;
+			var find_obj = _.find(questions, function(obj) {
+			    return obj.isSuccess == false;
+			});
+
+			if(text){
+				var userData = {
+					text: text,
+					author: 'Me'
+				}
+				userMessages.push(userData);
 			}
-			userMessages.push(userData);
-			dispatch(action.onRequestChat(userMessages));					
-		}
+
+			userMessages.push(find_obj);
+			dispatch(action.onRequestChat(userMessages));
+			find_obj.isSuccess = true;
 	}
 }
 

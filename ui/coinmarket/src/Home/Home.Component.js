@@ -61,7 +61,7 @@ class Home extends React.Component {
 	onChatFunc(e){
 		const {history, formdate, actions}=this.props
 		history.push('/Chat/');
-		actions.onChatStart()
+		//actions.onChatStart()
 	}
 
 	DetailsOption(cell, row){

@@ -79,4 +79,10 @@ export const onQues = question => {
   }
 }
 
+export const initialCall = chatData => {
+  return {
+    type: actionTypes.INITIAL_CALL,
+    chatData
+  }
+}
 

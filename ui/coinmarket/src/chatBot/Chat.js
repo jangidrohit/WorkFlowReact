@@ -7,10 +7,17 @@ import { connect } from 'react-redux';
 import './ChatClass.css';
 import Messages from './Messages'
 // import chat from './chat.html'
+import UserInput from './userInput';
+import _ from 'lodash';
+import NumberInput from './InputType/numberInput';
+import TextInput from './InputType/textInput';
+import DOBInput from './InputType/dobInput';
+import EmailInput from './InputType/emailInput';
+import SuggesstionInput from './InputType/suggesstionInput';
 
 class Chat extends React.Component {
 
- 	constructor(props) {
+	constructor(props) {
 	  super(props);
 	  this.state = {
 	  	data :"",
@@ -20,69 +27,40 @@ class Chat extends React.Component {
 		botName : 'Chatbot',
 		inputTitle:"",
 		process:0
-	  }
-	}
-
-	onChangeHandler(evt){
-		this.setState({data: evt.target.value});
-	}
-
-	// nextQuestion(){
-	// 	const {actions, formData}=this.props;
-	// 	var chat = ["answer","number","email","text","dob"]
-	// 	actions.onGetNextQuestion(chat[this.state.process]);
-	//     this.state.process += 1;
-	
-	// }
-
-	botData(){	
-		const {actions}=this.props;
-		var chat = ["number","email","text","dob"]
-	    actions.onRequestQuestion(chat[this.state.process]);
-	    this.state.process += 1;
-
-    //     for (var i = 1; i <= 8; i++) {
-	   //    if (this.state.messages[this.state.messages.length - i])
-	   //      document.getElementById("chatlog" + i).innerHTML = this.state.messages[this.state.messages.length - i];	  		
-  		// }
-	}
-
-	// newEntry() {
- //  		if (this.state.data != "") {
-	// 	    this.state.lastUserMessage = this.state.data;
-	// 	    this.inputTitle.value = "";
-
-	// 	    this.state.messages.push("User"+this.state.lastUserMessage);
-	// 	    this.nextQuestion()
-	// 		}
-	// }
-
-	onSend(evt) {
-		const {actions}=this.props;
-		this.inputTitle.value = ""
-	    actions.onChangeInput(this.inputTitle.value);
-		this.botData()	
+	  };
 	}
 
 	componentWillMount(){
 		const {actions, formData}=this.props;
-	    this.state.messages.push(formData.chatData.text);
+	    //this.state.messages.push(formData.chatData.text);
+		actions.onChangeInput();
 	}
 
-	// componentDidMount(){
-	// 	debugger;
-	// 	const {formData, actions}=this.props;
-	// 	this.state.botMessage = formData.chatData.text;		
-	// 	this.botData();
-	// }
-	componentDidReceiveProps() {
-		const {formData}=this.props;
-		formData.chatData.map((res) => {
-			if(res.isSuccess == false){
-				res.isSuccess = true;
+
+
+  renderView(){
+  	debugger;
+	const {formData}=this.props;
+	var lastProp = _.last(formData.chatData)	
+    if(formData.chatData.length > 0){
+	    switch(lastProp.type){
+			case "number" :
+				return  <NumberInput obj={this.props} />
+			case "date" :
+				return <DOBInput obj={this.props} />
+			case "email" :
+				return <EmailInput obj={this.props} />
+			case "suggest" :
+				return <SuggesstionInput obj={this.props} />
+			default : 
+				return <TextInput obj={this.props} />
 			}
-		})
-	}
+  	}
+    else{
+      return <TextInput obj={this.props} />
+    }
+  }
+
 
 	render(){
 		const {formData}=this.props;	
@@ -91,7 +69,7 @@ class Chat extends React.Component {
 		<div className='sc-chat-window'>
 			<div className="sc-header">
 			</div>
-			<div>
+			<div className="messageLists place">
 	 			 {
 	 			 	formData.chatData.map((message, i)=> {
  			 		    let contentClassList =  message.author === "Me" ? "sent" : "received";
@@ -101,11 +79,7 @@ class Chat extends React.Component {
 				}
 			</div>
 			<div className="sc-user-input">	 					
-				<input type={formData.chatData.type} id="chatbox" className="sc-user-input--text"
-				ref={el => this.inputTitle = el}
-				 placeholder={formData.value}  onChange={(e)=>{this.onChangeHandler(e)}}/>
-
-				<input name="submitmsg" type="submit"  id="submitmsg" className="sc-user-input--send-icon-wrapper" onClick={(e)=>{this.onSend(e)}} value="Send" />		
+				{this.renderView()}
 			</div>
         </div>
         );

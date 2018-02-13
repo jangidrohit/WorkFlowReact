@@ -7,4 +7,5 @@ export const REPORT_DATA = 'REPORT_DATA';
 export const CHAT_DATA = 'CHAT_DATA';
 export const SENDER_CHAT = 'SENDER_CHAT';
 export const RECEIVE_CHAT = 'RECEIVE_CHAT';	
-export const QUESTION = 'QUESTION'
+export const QUESTION = 'QUESTION';
+export const INITIAL_CALL = 'INITIAL_CALL';

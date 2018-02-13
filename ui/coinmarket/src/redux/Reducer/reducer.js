@@ -65,7 +65,13 @@ const todos = (state = initialObj, action) => {
       return ques;
      }
 
-     
+     case actionTypes.INITIAL_CALL :{
+      const init = {
+        ...state,
+        ...action
+      }
+      return init
+     }
     default:      
       return state;
   }

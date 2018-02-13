@@ -1,73 +1,38 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SendIcon from './icons/SendIcon';
+import _ from 'lodash';
+import './ChatClass.css';
+import NumberInput from './InputType/numberInput';
+import TextInput from './InputType/textInput';
 
+export default class UserInput extends Component {
 
-class UserInput extends Component {
-
-  constructor() {
-    super();
-    this.state = {
-      inputActive: false,
-    };
-  }
-
-  handleKey(event) {
-    if (event.keyCode === 13 && !event.shiftKey) {
-      this._submitText(event);
+  constructor(props) {
+    super(props);
+    this.state ={
+      lastProp : _.last(props.obj.chatData)
     }
   }
 
-  _submitText(event) {
-    event.preventDefault();
-    const text = this.userInput.textContent;
-    if (text && text.length > 0) {
-      this.props.onSubmit({
-        author: 'me',
-        type: 'text',
-        data: { text }
-      });
-      this.userInput.innerHTML = '';
+  renderView(){
+    debugger;
+    if(this.state.lastProp){
+    switch(this.state.lastProp){
+      case "number" :
+        return  <NumberInput obj={this.props} />
+      default : 
+        return <TextInput obj={this.props} />
     }
   }
-
-  _handleEmojiPicked(emoji) {
-    this.props.onSubmit({
-      author: 'me',
-      type: 'emoji',
-      data: { emoji }
-    });
+    else{
+      return <TextInput obj={this.props} />
+    }
   }
 
   render() {
     return (
-      <form className='sc-user-input'>
-        <div
-          role="button"
-          tabIndex="0"
-          onFocus={() => { this.setState({ inputActive: true }); }}
-          onBlur={() => { this.setState({ inputActive: false }); }}
-          ref={(e) => { this.userInput = e; }}
-          onKeyDown={this.handleKey.bind(this)}
-          contentEditable="true"
-          placeholder="Write a reply..."
-          className="sc-user-input--text"
-        >
-        </div>
-        <div className="sc-user-input--buttons">
-          <div className="sc-user-input--button"></div>
-          <div className="sc-user-input--button">
-            <SendIcon onClick={this._submitText.bind(this)} />
-          </div>
-        </div>
-      </form>
+          this.renderView()
     );
   }
 }
-
-UserInput.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  showEmoji: PropTypes.bool
-};
-
-export default UserInput;

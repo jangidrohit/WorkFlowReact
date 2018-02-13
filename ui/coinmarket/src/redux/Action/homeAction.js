@@ -3,9 +3,9 @@ import * as action from '../Action';
 import { RSAA } from 'redux-api-middleware'; // RSAA = '@@redux-api-middleware/RSAA'
 
 var chatJson = {
-  text: "Hi, What I can do for you ?",
-  type: "text"
+  text: "Hi, What I can do for you ?"
 }
+var userMessages = [];
  
 export const onSaveRangeAct = (data) => {
   return (dispatch) => {
@@ -45,9 +45,10 @@ export const onGetCoinDetails = (coins) => {
 }
 
 
-export const onChatStart = () => {
-  debugger;
-  return (dispatch) => {
-    dispatch(action.onRequestChat(chatJson));
-  }
-}
+// export const onChatStart = () => {
+//   debugger;
+//   return (dispatch) => {
+//     userMessages.push(chatJson.text)
+//     dispatch(action.onRequestChat(chatJson));
+//   }
+// }
