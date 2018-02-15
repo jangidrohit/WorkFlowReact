@@ -14,9 +14,9 @@ import TextInput from './InputType/textInput';
 import DOBInput from './InputType/dobInput';
 import EmailInput from './InputType/emailInput';
 import SuggesstionInput from './InputType/suggesstionInput';
+import LogoImg from '../images/IconsError.jpg';
 
 class Chat extends React.Component {
-
 	constructor(props) {
 	  super(props);
 	  this.state = {
@@ -35,7 +35,6 @@ class Chat extends React.Component {
 	    //this.state.messages.push(formData.chatData.text);
 		actions.onChangeInput();
 	}
-
 
 
   renderView(){
@@ -61,26 +60,107 @@ class Chat extends React.Component {
     }
   }
 
+	onSelect(evt){
+    	const {formData}=this.props;
+    	var value = ""
+		if(evt.target.name == 'bitcoin'){
+			value = "8080"
+		}
+		else{
+			value = "9000"
+		}
+
+		var response = {
+			text : value,
+			author : "Me",
+			local : "local"
+		}
+
+		formData.chatData.push(response)
+		this.setState({
+			data: evt.target.value
+		})
+	}
+	
+	onStop(evt){
+    	const {formData}=this.props;
+		var response = {
+			text : "Thanks",
+			author : "Received"
+		}
+		formData.chatData.push(response)
+		this.setState({
+			data: evt.target.value
+		})
+	}
+
+	onStart(evt){
+		const {actions}=this.props;
+    	var senderObj = {
+    		text : evt.target.name,
+    		error : false
+    	}
+    	actions.onChangeInput(senderObj);
+	}
+
+	onSend(evt) {
+		debugger;
+    	const {actions}=this.props;
+    	var senderObj = {
+    		text : evt.target.name,
+    		error : false
+    	}
+    	actions.onChangeInput(senderObj);
+ 	}
+
 
 	render(){
-		const {formData}=this.props;	
+		const {formData}=this.props;
 
 		return (
 		<div className='sc-chat-window'>
 			<div className="sc-header">
+				<p className="headerText">Ask anything you want</p>
 			</div>
 			<div className="messageLists place">
-	 			 {
+				<div className="insideMessage"> 
+ 			    {
 	 			 	formData.chatData.map((message, i)=> {
  			 		    let contentClassList =  message.author === "Me" ? "sent" : "received";
- 			 			return <div className = {contentClassList}> {message.text}</div>
+ 			 		    let errorClass = message.error === "error" ? LogoImg : "";
+	 			 			if(message.step == 1){
+	 			 				return <div className = {contentClassList}> {message.text} <br /> <a className="suggestion"  name="bitcoin"
+	 			 					onClick={(e)=>{this.onSelect(e)}}>Current Price of Bit Coin</a> <br /> <a className="suggestion" name="ethereum"  
+	 			 					onClick={(e)=>{this.onSelect(e)}}>Current Price of Ethereum</a></div>
+	 			 			}
+	 			 			if(message.step != 1 && message.local == "local"){
+								return <div>
+									<div className = "sent"> {message.text}
+									</div>
+								<div className = "received"> Would you like to <br /> <a className="suggestion"  name="sell"
+		 							onClick={(e)=>{this.onSend(e)}}>Sell</a> or <a className="suggestion" name="buy"  onClick={(e)=>{this.onSend(e)}}>Buy</a></div>
+		 						</div>
+	 			 			}
+	 			 			if(message.step == "last"){
+									return <div className = {contentClassList}> {message.text} <br /> <a className="suggestion"  name="bitcoin"
+	 			 					onClick={(e)=>{this.onStart(e)}}>Start</a> <br /> <a className="suggestion" name="ethereum"  
+	 			 					onClick={(e)=>{this.onStop(e)}}>Stop</a></div>							
+	 			 			}
+	 			 			else{
+								return <div className = {contentClassList}>
+								<img src={errorClass} />
+								 {message.text}	</div>
+							} 			 						 				 			 		
+
  			 			}
 	 			 	)		 	 			 	
 				}
+				</div>
 			</div>
-			<div className="sc-user-input">	 					
-				{this.renderView()}
-			</div>
+				<div className="sc-user-input">	 					
+					{this.renderView()}
+				</div>
+			
         </div>
         );
 	}

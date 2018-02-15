@@ -5,6 +5,7 @@ import '.././ChatClass.css';
 import * as actions from '../../redux/Action/chatAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+import * as commonFunc from '.././commonFunc';
 
 class NumberInput extends Component {
 
@@ -16,10 +17,11 @@ class NumberInput extends Component {
     }
   }
 
+
   onSend(evt) {
+    debugger;
     const {actions}=this.props;
-    actions.onChangeInput(this.inputTitle.value);
-    this.inputTitle.value = ""
+    commonFunc.onSend(evt, this.props, this.inputTitle.value)
   }
 
 

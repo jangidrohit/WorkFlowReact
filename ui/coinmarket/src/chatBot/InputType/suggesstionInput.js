@@ -18,8 +18,10 @@ class TextInput extends Component {
 
   onSend(evt) {
     const {actions}=this.props;
-    actions.onChangeInput(this.inputTitle.value);
-    this.inputTitle.value = "";
+    if(this.inputTitle.value){
+      actions.onChangeInput(this.inputTitle.value);
+      this.inputTitle.value = ""
+    }
   }
 
   onChangeHandler(evt){

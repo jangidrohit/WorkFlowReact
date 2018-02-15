@@ -165,30 +165,52 @@
 }
 
 .sent{
-    width: 100%;
+    margin-right:  12px;
+    margin-top: 8px;
     color: #263238;
-    background-color: #f4f7f9;
     margin-left:  40px;
     text-align: right;
 }
 
 
 .received{
-    width: 100%;
+    margin-top: 8px;
+    margin-left: 12px;
     color: #263238;
-    background-color: #f4f7f9;
     margin-right: 40px;
-text-align: left;
-/*    position: absolute;
-    left:  0;*/
+    text-align: left;
 }
-
 .messageLists{
-    width: 300px;
-    padding: 10px;
+    height: 460px;
+    width: 100%;
+    overflow: auto;
 }
 
 .place{
-      position: absolute;
-    bottom: 60px;
+    position: relative;
 }
+
+.suggestion{
+    cursor: pointer;
+    position: relative; 
+    height: 20px; 
+    box-sizing: border-box; 
+    padding: 1px 8px 1px 6px; 
+    background-color: #4e8cff; 
+    color: #fff; 
+    border-radius: 3px; 
+    font-weight: 500; 
+    cursor: pointer; 
+}
+
+.insideMessage{
+  width: 100%;
+  position:absolute;
+  bottom: 5px;
+  overflow: auto;
+}
+
+.headerText{
+    align-self: center;
+}
+

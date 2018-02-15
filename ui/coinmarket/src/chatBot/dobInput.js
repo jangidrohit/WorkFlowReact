@@ -5,7 +5,6 @@ import '.././ChatClass.css';
 import * as actions from '../../redux/Action/chatAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import * as commonFunc from '.././commonFunc';
 
 class NumberInput extends Component {
 
@@ -18,18 +17,9 @@ class NumberInput extends Component {
   }
 
   onSend(evt) {
-    debugger;
-    var error = "";
-    var type = "number"; 
     const {actions}=this.props;
-    if(/^[1-9]\d*$/.test(this.inputTitle.value)){
-      error = false
-    }
-    else{
-      error = true
-    }
-    commonFunc.onSend(evt, this.props, this.inputTitle.value, error, type)
-    this.inputTitle.value = "";
+    actions.onChangeInput(this.refs.inputTitle);
+    this.refs.inputTitle = ""
   }
 
 
@@ -38,7 +28,7 @@ class NumberInput extends Component {
         <div>
           <input type="number" id="chatbox" className="sc-user-input--text"
           ref={el => this.inputTitle = el}
-          placeholder="Please enter text" />
+          placeholder="Please enter text" onChange={(e)=>{this.onChangeHandler(e)}}/>
 
           <input name="submitmsg" type="submit"  id="submitmsg" className="sc-user-input--send-icon-wrapper" onClick={(e)=>{this.onSend(e)}} value="Send" />    
         </div>

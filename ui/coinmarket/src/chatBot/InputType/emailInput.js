@@ -5,6 +5,8 @@ import '.././ChatClass.css';
 import * as actions from '../../redux/Action/chatAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+import * as commonFunc from '.././commonFunc';
+import Chat from '.././Chat'
 
 class TextInput extends Component {
 
@@ -18,21 +20,20 @@ class TextInput extends Component {
 
   onSend(evt) {
     debugger;
-    const {actions}=this.props;
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.inputTitle.value)){
-        actions.onChangeInput(this.inputTitle.value);  
-        this.inputTitle.value = "";
-    }
-    else{
-      alert('error')
-    }
+    var error = "";
+    var type = "email" 
+    const {actions, formData}=this.props;
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.inputTitle.value)){        
+        error = false;
 
-
+      }
+      else{
+        error = true;
+      }
+      commonFunc.onSend(evt, this.props, this.inputTitle.value,error, type) ;
+      this.inputTitle.value = "";      
   }
 
-  onChangeHandler(evt){
-    console.log(evt)
-  }
 
   render() {
     return (
