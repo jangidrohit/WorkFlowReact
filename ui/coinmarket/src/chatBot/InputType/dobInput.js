@@ -6,6 +6,9 @@ import * as actions from '../../redux/Action/chatAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as commonFunc from '.././commonFunc';
+import { DatePicker, DatePickerInput } from 'rc-datepicker';
+import moment from 'moment';
+import 'rc-datepicker/lib/style.css';
 
 class NumberInput extends Component {
 
@@ -13,26 +16,42 @@ class NumberInput extends Component {
     super(props);
     this.state ={
       lastProp : _.last(props.obj.chatData),
-          inputTitle:"",
+      inputTitle:"",
+      selectedDate: new Date()
     }
+    this.onChange = this.onChange.bind(this);
+  }
+  
+  onChange(date) {
+    this.setState({
+      selectedDate: date
+    });
   }
 
 
   onSend(evt) {
-    debugger;
+    var error = "";
+    var type = "email" 
     const {actions}=this.props;
-    commonFunc.onSend(evt, this.props, this.inputTitle.value)
+    commonFunc.onSend(evt, this.props, this.state.selectedDate.toString(), error, type)
   }
 
 
   render() {
+    const today = new Date();
     return (
         <div>
-          <input type="date" id="chatbox" className="sc-user-input--text"
-          ref={el => this.inputTitle = el}
-          placeholder="Please enter dob" />
+          <div>
+              <DatePickerInput
+                  onChange={this.onChange}
+                  value={this.state.selectedDate}
+                  className='my-custom-datepicker-component sc-user-input--text'
+              />
 
-          <input name="submitmsg" type="submit"  id="submitmsg" className="sc-user-input--send-icon-wrapper" onClick={(e)=>{this.onSend(e)}} value="Send" />    
+              {/* this renders only a fixed datepicker */}
+              <DatePicker onChange={this.onChange} value={this.state.selectedDate} />
+          </div>
+         <input name="submitmsg" type="submit"  id="submitmsg" className="sc-user-input--send-icon-wrapper" onClick={(e)=>{this.onSend(e)}} value="Send" />    
         </div>
     );
   }

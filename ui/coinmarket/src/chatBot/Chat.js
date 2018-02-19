@@ -15,6 +15,12 @@ import DOBInput from './InputType/dobInput';
 import EmailInput from './InputType/emailInput';
 import SuggesstionInput from './InputType/suggesstionInput';
 import LogoImg from '../images/IconsError.jpg';
+import CloseIcon from '../images/close-icon.png';
+import AutoSuggest from './InputType/autoSuggest';
+import MobileNumberInput from './InputType/mobileNumberInput';
+import userImg from '../images/icons8-communicate-50.png';
+import botImg from '../images/icons8-hdtv-50.png';
+
 
 class Chat extends React.Component {
 	constructor(props) {
@@ -26,7 +32,8 @@ class Chat extends React.Component {
 		botMessage : "", 
 		botName : 'Chatbot',
 		inputTitle:"",
-		process:0
+		process:0,
+		isOpen : false
 	  };
 	}
 
@@ -51,6 +58,10 @@ class Chat extends React.Component {
 				return <EmailInput obj={this.props} />
 			case "suggest" :
 				return <SuggesstionInput obj={this.props} />
+			case "autoSuggest" :
+				return <AutoSuggest obj={this.props} />
+			case "mobileNumber" :
+				return <MobileNumberInput obj={this.props} />
 			default : 
 				return <TextInput obj={this.props} />
 			}
@@ -61,13 +72,14 @@ class Chat extends React.Component {
   }
 
 	onSelect(evt){
+		debugger;
     	const {formData}=this.props;
     	var value = ""
 		if(evt.target.name == 'bitcoin'){
-			value = "8080"
+			value = formData.coins[0].price_usd + " USD"
 		}
 		else{
-			value = "9000"
+			value = formData.coins[1].price_usd + " USD"
 		}
 
 		var response = {
@@ -113,7 +125,6 @@ class Chat extends React.Component {
     	actions.onChangeInput(senderObj);
  	}
 
-
 	render(){
 		const {formData}=this.props;
 
@@ -121,21 +132,22 @@ class Chat extends React.Component {
 		<div className='sc-chat-window'>
 			<div className="sc-header">
 				<p className="headerText">Ask anything you want</p>
+				<div className="sc-header--close-button" onClick={this.props.onClose}>
+					<img src= {CloseIcon} alt=""/>
+				</div>
 			</div>
 			<div className="messageLists place">
 				<div className="insideMessage"> 
  			    {
 	 			 	formData.chatData.map((message, i)=> {
- 			 		    let contentClassList =  message.author === "Me" ? "sent" : "received";
- 			 		    let errorClass = message.error === "error" ? LogoImg : "";
-	 			 			if(message.step == 1){
-	 			 				return <div className = {contentClassList}> {message.text} <br /> <a className="suggestion"  name="bitcoin"
-	 			 					onClick={(e)=>{this.onSelect(e)}}>Current Price of Bit Coin</a> <br /> <a className="suggestion" name="ethereum"  
-	 			 					onClick={(e)=>{this.onSelect(e)}}>Current Price of Ethereum</a></div>
-	 			 			}
+	 			 		    let contentClassList =  message.author === "Me" ? "sent" : "received";
+	 			 		    let errorClass = message.error === "error" ? LogoImg : "";
+	 			 		    var chatUsersImage = message.author === "Me" ? userImg : botImg;
 	 			 			if(message.step != 1 && message.local == "local"){
 								return <div>
-									<div className = "sent"> {message.text}
+									<div className = "sent">
+										<img src={chatUsersImage} />
+										<p> {message.text} </p>
 									</div>
 								<div className = "received"> Would you like to <br /> <a className="suggestion"  name="sell"
 		 							onClick={(e)=>{this.onSend(e)}}>Sell</a> or <a className="suggestion" name="buy"  onClick={(e)=>{this.onSend(e)}}>Buy</a></div>
@@ -143,24 +155,23 @@ class Chat extends React.Component {
 	 			 			}
 	 			 			if(message.step == "last"){
 									return <div className = {contentClassList}> {message.text} <br /> <a className="suggestion"  name="bitcoin"
-	 			 					onClick={(e)=>{this.onStart(e)}}>Start</a> <br /> <a className="suggestion" name="ethereum"  
-	 			 					onClick={(e)=>{this.onStop(e)}}>Stop</a></div>							
+	 			 					onClick={(e)=>{this.onStart(e)}}>Yes</a> <br /> <a className="suggestion" name="ethereum"  
+	 			 					onClick={(e)=>{this.onStop(e)}}>No</a></div>							
 	 			 			}
 	 			 			else{
 								return <div className = {contentClassList}>
+								<img src={chatUsersImage} />
 								<img src={errorClass} />
-								 {message.text}	</div>
-							} 			 						 				 			 		
-
+								 <p> {message.text}	</p></div>
+							}		 						 				 			 		
  			 			}
 	 			 	)		 	 			 	
 				}
 				</div>
 			</div>
-				<div className="sc-user-input">	 					
-					{this.renderView()}
-				</div>
-			
+			<div className="sc-user-input">	 					
+				{this.renderView()}
+			</div>			
         </div>
         );
 	}

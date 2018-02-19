@@ -4,8 +4,8 @@ import _ from 'lodash';
 
 var userMessages = [];
 var questions = [{
-		type: "text",
-		text: "Hi, What can I do for you",
+		type: "autoSuggest",
+		text: "Hi, Do you want to know about the price of",
 		author:'Received',
 		isSuccess: false,
 		step: 1
@@ -18,8 +18,8 @@ var questions = [{
 		step: 2
 	},
 	{
-		type: "number",
-		text: "Please enter the mobile number to validate the crediential",
+		type: "mobileNumber",
+		text: "Please enter the mobile number",
 		author:'Received',
 		isSuccess: false,
 		step: 2
@@ -40,7 +40,7 @@ var questions = [{
 	},	
 	{
 		type:"text",
-		text:"Your request is successfully completed. Do you want to start it again ",
+		text:"Your request is successfully completed. Do you need any thing",
 		author:'Received',
 		isSuccess: false,
 		step:"last"
@@ -82,11 +82,15 @@ export const onChangeInput = (req) => {
 					author: 'Me'
 				}
 				userMessages.push(userData);
+				find_obj.isSuccess = true;
+			}
+
+			if(find_obj.step ==1){
+				find_obj.isSuccess = true;
 			}
 
 			userMessages.push(find_obj);
 			dispatch(action.onRequestChat(userMessages));
-			find_obj.isSuccess = true;
 			if(find_obj.step =="last"){
 				_.map(questions, function(a){
 					a.isSuccess = false;

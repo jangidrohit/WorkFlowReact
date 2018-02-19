@@ -1,11 +1,14 @@
 import React from 'react'
 import './Home.css';
+import '../chatBot/launcher.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import * as appConfig from './../Config/Config';
 import * as actions from '../redux/Action/homeAction';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import Chat from '../chatBot/Chat';
+import Launcher from '../chatBot/launch';
+import PropTypes from 'prop-types';
 
 class Home extends React.Component {
 
@@ -14,6 +17,12 @@ class Home extends React.Component {
       this.state = {
       	data: []
       }
+		this.state = {
+		  showComponent: false,
+        	isOpen: true
+		};
+		this._onButtonClick = this._onButtonClick.bind(this);
+		this.handleClick = this.handleClick.bind(this);
       // pageData = {
       //    data: [],
       //    minRange : '',
@@ -22,6 +31,18 @@ class Home extends React.Component {
     //  this.ActionOption = this.ActionOption.bind(this)
    }
 
+
+  _onButtonClick() {
+    this.setState({
+      showComponent: true,
+    });
+  }
+
+  _handleClick() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
 
  componentWillMount() {
 
@@ -58,31 +79,39 @@ class Home extends React.Component {
   	// 	}
   	// }
   	
-	onChatFunc(e){
-		const {history, formdate, actions}=this.props
-		history.push('/Chat/');
-		//actions.onChatStart()
+	_onButtonClick() {
+		this.setState({
+		  showComponent: true,
+		});
 	}
 
-	DetailsOption(cell, row){
-	  return '<div class="chat-option" ><i class="glyphicon glyphicon-list-alt" ></i></div>';
+	handleClick(){
+	    this.setState({
+		  		showComponent: false,
+		});
 	}
 
 	render(){
 		const {history, formdate, actions}=this.props
 		var options = {
 			onRowClick: function(row, target){
-				//debugger;
-				//actions.navigateToChart(row);
 				history.push('/chart/'+ row.name);
 			}
 		}
 
 		return (
 			<div className="coins-details-container">
+
+				<div className="sc-launcher">
+					<img className="sc-open-icon" src="close-icon.png" onClick={this._onButtonClick} />
+			        {this.state.showComponent ?
+			           	<Launcher onClose={this.handleClick.bind(this)}
+           		        isOpen={this.state.isOpen}
+			           	/> : null
+		        }
+				</div>
 				<div className="coins-details-header">
 					<div className="coin-title"><h3>Cryptocurrency Market Capitalizations</h3></div>
-					<input type="button" onClick={(e)=>{this.onChatFunc(e)}} value="Chat"/>
 					<div className="coin-range">
 						<div className="min-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChangeHandler(e)}} placeholder="Min range" value={formdate.minRange} name="minRange"/></div>
 						<div className="max-range"><input tyle="text" className="form-control" onChange={(e)=>{this.onChangeHandler(e)}} placeholder="Max range" value={formdate.maxRange} name="maxRange"/></div>
@@ -140,8 +169,14 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
+Launcher.propTypes = {
+  handleClick: PropTypes.func,
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Home)
+
+
 
